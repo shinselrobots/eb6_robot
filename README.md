@@ -1,13 +1,17 @@
+# EB-6 Robot
 <img align="left" width="200" src="EB-6.png" />
 
-# EB-6 Robot
-## Interactive robot with AI chat, speech recogniton, text to speech, etc.
+### Interactive robot with AI chat, speech recogniton, and person tracking.
 ### Videos: 
   - [AI trying to trick user](https://youtube.com/shorts/k754uDlYR40?feature=share) 
   - [Happy Dance](https://youtube.com/shorts/6MphU05JQVU?feature=share)
 
-### Electronics Design, Software Design, CAD files, etc. available at www.dshinsel.com/eb6
-
+### More at www.dshinsel.com/eb6 
+- Electronics Design
+- Software Design
+- CAD files
+- Parts List
+  
 ## Software Requirements
 Software runs on ROS1 Noetic, but could be easily ported to ROS2. All modules are Python3, with minimal C++ to make it easy for hobbyest to use and modify.  See software overview on www.dshinsel.com for more info.
 
@@ -19,6 +23,7 @@ Software runs on ROS1 Noetic, but could be easily ported to ROS2. All modules ar
 - Intel RealSense D435 depth camera (optional)
 
 ## Dependencies (a work in progress)
+### See README.md in each component folder
 - ROS Noetic (or port to your version)
 - Piper Voice Text to Speech
   - [Piper](https://github.com/rhasspy/piper)
