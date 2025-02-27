@@ -1,12 +1,15 @@
-# robot_sounds
+# robot_voice
 
 ## Description:
-1. Provides "Say" a phrase functionality (Text to Speech) using Cepstral Voice <www.cepstral.com>
-2. Provides "Play" a sound (wav file) functionality via python pyaudio
+### Provides Text to Speech using:
+- Cepstral(Older) https://www.cepstral.com/
+- Piper TTS (Newer) https://github.com/rhasspy/piper
 
-## Installation Instructions:
+
+## Piper Installation: see piper github
+
+## (OLD) Cepstral Installation Instructions:
 - Install this package
-
 
 
 Install wav playback for python
