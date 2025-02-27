@@ -1,0 +1,3 @@
+# EB-6 Robot
+## Interactive robot with AI chat, speech recogniton, text to speech, etc.
+
