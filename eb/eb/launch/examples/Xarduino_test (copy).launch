@@ -1,0 +1,39 @@
+<launch>
+
+  <!-- Arduino Test  -->
+
+
+  <!-- Base, including joystick, arduino (waist actuators), 
+  and wheel motors (sabertooth) -->
+  <include file="$(find eb)/launch/include/base.launch"/>
+
+  <!-- Robot Description (URDF) -->
+  <include file="$(find eb_description)/launch/description.launch"/>
+
+  <!-- Arduino #3 - Sheldon Head, controls eyes (and sensors in the future) -->
+  <node pkg="rosserial_python" type="serial_node.py" name="head_node" output="screen">
+    <param name="port" value="/dev/head_arduino"/>
+    <param name="baud" value="57600"/>
+  </node>
+
+  <!-- Arduino 4 & 5 - Sheldon Arms, controls arm colors (and sensors in the future) -->
+  <!-- WARN no serial nums, so ports mapped by plug location in USB hub! (see udev rules) -->
+  <node pkg="rosserial_python" type="serial_node.py" name="arm1_node" output="screen">
+    <param name="port" value="/dev/arm1_arduino"/>
+    <param name="baud" value="57600"/>
+  </node>
+  <node pkg="rosserial_python" type="serial_node.py" name="arm2_node" output="screen">
+    <param name="port" value="/dev/arm2_arduino"/>
+    <param name="baud" value="57600"/>
+  </node>
+
+
+  <!-- Dynamixel Servo Controllers -->
+  <include file="$(find eb_servos)/launch/servos.launch"/>
+
+
+  <!-- Joystick buttons to control some hard coded behaviors. -->
+  <node pkg="eb_joybuttons" type="joy_buttons.py" name="joy_buttons" output="screen"/>
+
+
+</launch>

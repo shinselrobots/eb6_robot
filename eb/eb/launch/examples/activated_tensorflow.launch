@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<!-- launch a shell script that delays "n" seconds, then activates python environment for tensorflow, and then launches tensorflow node -->
+
+<launch>
+  <node name="activated_tensorflow" pkg="cob_people_object_detection_tensorflow"
+    type="activated_launch.sh" 
+    args="2 cob_people_object_detection_tensorflow cob_people_object_detection_tensorflow.launch"
+    output="screen">
+  </node>
+
+</launch>

@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<launch>
+  <node name="cob_people_object_detection_detection" pkg="cob_people_object_detection_tensorflow" type="cob_people_object_detection_tensorflow.py" output="screen">
+    <rosparam command="load" file="$(find eb)/launch/include/tensorflow/cob_people_object_detection_tensorflow_params.yaml"/>
+  </node>
+</launch>

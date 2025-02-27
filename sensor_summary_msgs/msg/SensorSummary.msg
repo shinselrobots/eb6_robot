@@ -1,0 +1,12 @@
+float32 nearest_object_front
+float32 nearest_object_front_right
+float32 nearest_object_front_left
+float32 nearest_object_side_right
+float32 nearest_object_side_left
+float32 nearest_object_rear
+float32 clear_path_gap_direction
+float32 clear_path_gap_width
+float32 avoidance_range_used
+
+
+

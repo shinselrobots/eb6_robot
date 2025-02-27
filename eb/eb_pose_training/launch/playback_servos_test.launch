@@ -1,0 +1,24 @@
+<launch>
+
+  <!-- This launch file is for testing playback of servos from csv file.
+       After launching this, run "playback_servos.py" in a separate window for testing. -->
+       
+       
+  <!-- Using Joystick to train poses for EB Robot. -->
+  <!-- NOTE: LOGITECH JOYSTICK DOES NOT WORK ON JETSON NANO! (good thing we use Intel NUC!)
+       see https://github.com/jetsonhacks/logitech-f710-module -->
+
+  <!-- Dynamixel Servo Controllers, using modified dynamixel_motor module -->
+  <include file="$(find eb_servos)/launch/servos.launch"/>
+
+  <!-- Joystick input, which publishes a generic '/joy' Joystick topic. -->
+  <node pkg="joy" type="joy_node" name="joystick" output="screen"/>
+
+
+  <!-- DISABLED for playback (not sure if it's required to be disabled)
+    <node name="record_servos" pkg="eb_pose_training" type="record_servos.py" output="screen"/>
+  -->
+
+
+
+</launch>

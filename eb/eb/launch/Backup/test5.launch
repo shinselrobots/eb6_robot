@@ -1,0 +1,61 @@
+<launch>
+
+  <!-- TEST launch file for EB Robot. THIS ONE FOR TESTING FACE TRACKING, etc. -->
+
+   
+  <!-- Arduino in EB Head, controls eyes and ears colors -->
+  <!-- WARNING Feather does not have a serial number, so ports mapped by plug location in USB hub! (see udev rules) --> 
+  <node pkg="rosserial_python" type="serial_node.py" name="head_node" output="screen">
+    <param name="port" value="/dev/head_arduino"/>
+    <param name="baud" value="57600"/>
+  </node>
+
+
+  <!-- Dynamixel Servo Controllers, using modified dynamixel_motor module -->
+  <include file="$(find eb_servos)/launch/servos.launch"/>
+  
+  
+  <!-- Joystick modules, including joystick button handler -->
+  <!-- Note: when training poses, disable this and use "eb_pose_training", which invokes joy and servos stack itself -->
+  <include file="$(find eb)/launch/include/eb_joystick.launch"/>
+
+  
+  <!-- Text to speech (robot voice) and sound effects services -->   
+  <rosparam file="$(find eb)/config/jokes.yaml" command="load"/>
+  <include file="$(find robot_sounds)/launch/robot_sounds.launch"/>
+    
+  
+  <!-- Speech Recognition -->
+  <include file="$(find speech_handler)/launch/speech_handler.launch"/>
+  <include file="$(find google_cloud_speech)/launch/google_cloud_speech.launch"/>
+
+
+  <!-- Face Detector  -->
+  <node name="face_detector_node" pkg="face_detector" type="face_detector.py" required="true" output="screen">
+    <!-- load params from Yaml -->
+    <rosparam command="load" file="$(find face_detector)/launch/face_detector_params.yaml"/>
+  </node>
+
+
+  <!-- Face Recognizer  -->
+  <node name="face_recognizer" pkg="face_recognizer" type="face_recognizer.py" output="screen">
+    <rosparam command="load" file="$(find face_recognizer)/launch/face_recognizer_params.yaml"/>
+  </node>
+  
+
+  <!-- Behavior plugin loader -->
+       roslaunch behavior_common behavior_common.launch    
+  <node pkg="behavior_common" type="behavior_loader" name="behavior_common_node" output="screen">
+    <param name="robot_startup_behavior" value="/wakeup_behavior"/>
+    <param name="robot_idle_behavior" value="/idle_behavior"/>
+  </node>
+
+
+
+
+  <!-- launch realsense camera   -->
+  <include file="$(find eb)/launch/include/eb_rs_aligned_depth.launch"/>
+
+
+
+</launch>

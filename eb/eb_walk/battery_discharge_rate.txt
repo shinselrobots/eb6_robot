@@ -1,0 +1,15 @@
+Battery Discharge rate
+5000mah, 14.8v Spektrum LiPo (74wh)
+measured with cpu load only
+
+Time prior to shutdown:
+minutes volts
+120     15.35
+60      14.88
+30      14.60 
+20      14.36 - Yellow
+10      13.81 - Red, Warning!
+5       13.26 - Red (Flashing?), 5 min warning!
+2       12.58 - Final 2 min Warning
+0       11.0 --> 0.0 - crash
+

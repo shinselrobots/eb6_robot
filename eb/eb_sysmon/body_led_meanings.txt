@@ -1,0 +1,48 @@
+Body LED Color Decoder
+
+LED numbers.  0 = top LED. (Bottom LEDS are easier to see)
+LED 0-3 reserved for battery
+LED_BATTERY_0 =      0
+LED_BATTERY_1 =      1
+LED_BATTERY_2 =      2
+LED_BATTERY_3 =      3
+LED_OBJECT =         4
+LED_FACE_TRACKER =   5
+LED_AI_STATE =       6
+LED_MICROPHONE =     7
+
+
+OBJECT DETECTION
+Object detector status, Front sensors, unless backing up
+    RED             STOP  (Very close object)
+    YELLOW          SLOW  (Close object
+    BLUE            AVOID (Mid range object)
+    GREEN           OK    (No object close)
+
+
+FACE TRACKER
+    RED             WAIT_FIRST_FACE (no camera yet)
+    YELLOW          DISABLED
+    BLUE            READY
+    GREEN           TRACKING
+    PURPLE          GOT NAME
+
+
+AI STATE
+    RED             (not used)      
+    YELLOW          DISABLED
+    BLUE            READY, NOT ENGAGED
+    GREEN           ENGAGED
+    WHITE           LISTEN, LISTEN_WAIT
+    PURPLE          BEHAVIOR WAIT
+
+
+MICROPHONE
+    RED             MIC FAIL
+    YELLOW          DISABLED
+    GREEN           MIC READY / LISTENING / DONE
+    PURPLE          KEYWORD MODE
+    WHITE           KEYWORD (NAME) DETECTED (Even in Sleep)
+    
+
+

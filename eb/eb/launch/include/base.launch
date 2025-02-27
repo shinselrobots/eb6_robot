@@ -1,0 +1,57 @@
+<launch>
+  
+  <!-- Arduino #1 - Mega2560 -->
+  <node pkg="rosserial_python" type="serial_node.py" name="base_arduino_node" output="screen">
+    <param name="port" value="/dev/base_arduino"/>
+    <param name="baud" value="57600"/>
+  </node>
+
+
+  <!-- Arduino #2 - Feather 32u4, reads Wheel Odometers and publishes Odom messages-->
+  <node pkg="rosserial_python" type="serial_node.py" name="base_odom_arduino_node" output="screen">
+    <param name="port" value="/dev/base_odom_arduino"/>
+    <param name="baud" value="57600"/>
+  </node>
+
+  <!-- Note: More Arduinos for head and arms are launched by Sheldon launch file -->
+  
+  <!-- (Input #1, stage 1) This is the Joystick input, which publishes a generic 
+       /joy Joystick topic.  It is received by the eb_teleop_joy node below -->
+  <node pkg="joy" type="joy_node" name="joystick"/>
+
+
+  <!-- (Input #1, stage 2) This is the Joystick teleop node, which converts Joystick messages
+       to Twist messages. It is received by the priority and speed control node below 
+       NOTE: make sure the green "mode" light on the Logitech Joystick is OFF! -->
+  <node pkg="eb_teleop" type="eb_teleop_joy" name="eb_teleop_joystick">
+    <param name="scale_angular" value="0.1"/>
+    <param name="scale_linear" value="0.5"/>
+    <remap from="eb_teleop_joystick/cmd_vel" to="move_base/priority2"/>  <!-- Medium Priority -->
+  </node>
+
+   
+  <!-- (Priority and Speed Control) eb_motor_control node. Uses motor feedback to:
+       + ramp speed changes (don't jerk), prevent motor stall at low speeds,
+       and provide constant velocity (uphill/downhill). subscribes to 
+       move_base/priority<n>" messages, and outputs "/odom" and "/wheel_motors_cmd_vel" to
+       the Sabertooth node below -->
+  <node pkg="wheel_control" type="wheel_control_node" name="wheel_control_node" output="screen"/>
+
+
+  <!-- Safety control (note priority0 is lowest) 
+  <node pkg="safety_control" type="safety_control_node" name="safety_control_node" output="screen">
+    <remap from="cmd_vel" to="move_base/priority3"/>  
+    <param name="front_zone_cliff_adder" value="0.4"/>
+    <param name="avoid_turn_amount" value="0.2"/> 
+  </node>
+  -->
+ 
+  <!-- (Motor Driver) Sabertooth node.  Input_topic remapped to get commands from the
+   eb_motor_control node (speed control) instead of directly from the system -->
+  <node pkg="sabertooth_usb" type="sabertooth_usb_node" name="sabertooth_usb_node" output="screen">
+    <param name="port" value="/dev/sabertooth"/>
+    <param name="hz" value="1"/>
+    <param name="input_topic" value="/wheel_motors_cmd_vel" />
+  </node>
+
+</launch>

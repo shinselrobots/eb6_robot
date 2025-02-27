@@ -1,0 +1,18 @@
+<launch>
+
+  <!-- SIMPLIFIED launch file for EB Robot. No behaviors, to allow debugging hardware -->
+
+   
+  <!-- Arduino in EB Head, controls eyes and ears colors -->
+  <!-- WARNING Feather does not have a serial number, so ports mapped by plug location in USB hub! (see udev rules)  -->
+
+  <node pkg="rosserial_python" type="serial_node.py" name="head_node" output="screen">
+    <param name="port" value="/dev/head_arduino"/>
+    <param name="baud" value="57600"/>
+  </node>
+  
+
+
+
+  
+</launch>

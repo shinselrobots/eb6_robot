@@ -1,0 +1,20 @@
+<launch>
+
+  <!-- Launch EB Robot Arduinos -->
+
+  <!-- Arduino in EB Head, controls eyes and ears colors -->
+  <!-- WARNING Feather has no serial number, so ports mapped by plug location in USB hub! (see udev rules) --> 
+  <node name="head_node" pkg="rosserial_python" type="serial_node.py" output="screen">
+    <param name="port" value="/dev/head_arduino"/>
+    <param name="baud" value="57600"/>
+  </node>
+
+  <!-- Arduino in EB Body, publishes IMU and sensors output -->
+  <!-- WARNING Feather has no serial number, so ports mapped by USB location! (see udev rules) -->
+  <node name="body_node" pkg="rosserial_python" type="serial_node.py" output="screen">
+    <param name="port" value="/dev/body_arduino"/>
+    <param name="baud" value="57600"/>
+  </node>
+  
+  
+</launch>

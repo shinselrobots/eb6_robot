@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+
+<launch>
+  
+  <!-- launch detector only. Assumes exclusive camera access to this node (see yaml file) -->
+  <node name="face_detector_node" pkg="face_detector" type="face_detector.py" required="true" output="screen">
+
+    <!-- load params from Yaml -->
+    <rosparam command="load" file="$(find face_detector)/launch/face_detector_params.yaml"/>
+
+  </node>
+
+
+
+</launch>

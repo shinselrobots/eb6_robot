@@ -1,0 +1,3 @@
+<launch>
+<node name="joy_button_cmds" pkg="eb_joystick_button_cmds" type="eb_joystick_button_cmds.py" output="screen"/>
+</launch>

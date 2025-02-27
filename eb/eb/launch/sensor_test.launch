@@ -1,0 +1,39 @@
+<launch>
+
+  <!-- Launch sensors and servos for testing -->
+
+  <!-- Head and Body Arduinos -->
+  <include file="$(find eb)/launch/include/arduinos.launch"/>
+
+  <!-- Dynamixel Servo Controllers, using modified dynamixel_motor module -->
+  <include file="$(find eb_servos)/launch/servos.launch"/>
+  
+  <!-- Robot Voice: Text to speech server  -->   
+  <include file="$(find robot_voice)/launch/robot_voice.launch"/>
+
+  <!-- Wheel motor controller. Accepts velocity messages and joystick inputs.
+       Also handles joystick buttons and collision avoidance -->
+  <include file="$(find eb_wheel_control)/launch/eb_wheel_control.launch"/>
+
+  <!-- Dashboards for system monitoring and control -->
+  <include file="$(find eb_servos)/launch/dashboard.launch"/>
+
+  
+  <!-- CAMERA OPTIONS -->
+  <!-- launch USB, realsense, or bodytracker camera driver -->
+  <include file="$(find eb)/launch/include/rgb_1920_eye_camera.launch"/>
+  <include file="$(find eb)/launch/include/rs_848_depth_only.launch"/>
+  <include file="$(find eb)/launch/include/depthimage_to_laserscan.launch"/>
+
+  <!-- Sensor Fusion. Combines laserscans and other sensors into key information -->
+  <include file="$(find sensor_fusion)/launch/sensor_fusion.launch"/>
+
+  <!-- Joystick input, which publishes a generic '/joy' Joystick topic. Disable when not needed -->
+  <!-- *** DISABLED ***
+  <node pkg="joy" type="joy_node" name="joystick" output="screen"/>
+  -->
+  
+
+
+
+</launch>

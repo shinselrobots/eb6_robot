@@ -1,0 +1,5 @@
+<launch>
+
+  <node name="eb_wheel_control" pkg="eb_wheel_control" type="wheel_control.py" output="screen"/>
+ 
+</launch>

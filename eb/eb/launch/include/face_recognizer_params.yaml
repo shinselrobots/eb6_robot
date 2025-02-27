@@ -1,0 +1,19 @@
+# Parameters for Face Recognizer
+
+show_faces_at_launch: false
+
+# Set your detection topic here
+#detection_topic: "/object_detection/detections"
+detection_topic: "/body_tracker_array/position"
+
+# Set your camera topic here 
+#camera_topic: "/camera/rgb/image_rect_color"
+#camera_topic: "/object_detection/detections_image"
+#camera_topic: "/cv_camera/image_raw"
+camera_topic: "/camera/color/image"
+
+# Set your output topic here
+output_topic: "/body_tracker_array/people"
+
+# Set your output topic for RGB Image here
+output_topic_rgb: "/face_recognizer/faces/image"

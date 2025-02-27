@@ -1,0 +1,41 @@
+# Parameters for face detection and recognition
+
+# Display camera and bounding boxes
+show_cv_debug_window: true
+
+### Face Recognition:
+show_faces_at_launch: true
+
+
+# Use robot's eye camera exclusively for this node, and use it instead of ROS image messages
+exclusive_camera_mode: false
+
+# Use Jetson CSI Camera or USB camera 
+use_jetson_csi_camera: false
+
+# RGB camera image topic
+# Use raw image (not compressed) from Realsense color camera:
+#camera_rgb_topic: /camera/color/image_raw
+camera_rgb_topic: /usb_cam/image_raw
+
+
+# Optional depth image topic
+# WARNING!  If specified, node will not process RGB unless it also receives depth!
+#camera_depth_topic: ""
+#camera_depth_topic: /camera/aligned_depth_to_color/image_raw
+
+
+# publish output 
+output_person_name_topic: "/body_tracker_array/faces/name"
+
+
+output_topic_rgb: "/camera/color/image"
+#output_topic_rgb: "/body_tracker_array/faces/image"
+
+output_topic_rgb: "/body_tracker_array/faces/image"
+
+
+# Optional video file path for reading from file.  if "no", read from ROS message
+#video_file_path: "no"
+
+

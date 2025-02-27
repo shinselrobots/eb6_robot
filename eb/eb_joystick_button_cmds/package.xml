@@ -1,0 +1,9 @@
+<package>
+  <name>eb_joystick_button_cmds</name>
+  <version>0.0.0</version>
+  <description>Robot joystick button support for the eb robot</description>
+  <maintainer email="shinsel.robots@gmail.com">Dave Shinsel</maintainer>
+  <license>BSD</license>
+  <buildtool_depend>catkin</buildtool_depend>
+  <run_depend>joy</run_depend>
+</package>

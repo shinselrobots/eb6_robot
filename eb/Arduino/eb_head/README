@@ -1,0 +1,10 @@
+GOTCHA:  if adding custom messages, you need to rerun:
+
+  sudo apt -y install ros-melodic-rosserial-arduino
+  sudo apt -y install ros-melodic-rosserial
+
+  cd Arduino/libraries
+  rm -r ros_lib
+  rosrun rosserial_arduino make_libraries.py .
+  restart Arduino.
+

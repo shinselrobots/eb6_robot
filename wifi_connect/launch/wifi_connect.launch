@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+
+<launch>
+  <node name="wifi_connect" pkg="wifi_connect" type="wifi_connect.py" output="screen"> </node>
+</launch>

@@ -1,0 +1,8 @@
+<package>
+  <name>eb_walk</name>
+  <version>0.0.0</version>
+  <description>Wheel and or walking control</description>
+  <maintainer email="shinsel.robots@gmail.com">Dave Shinsel</maintainer>
+  <license>BSD</license>
+  <buildtool_depend>catkin</buildtool_depend>
+</package>

@@ -1,0 +1,10 @@
+<!-- 
+  display servo status gui
+-->
+
+
+<launch>
+
+  <node pkg="eb_servos" name="servo_gui" type="servo_gui.py" output="screen">
+  </node>
+</launch>

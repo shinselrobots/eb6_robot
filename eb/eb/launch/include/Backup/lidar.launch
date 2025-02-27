@@ -1,0 +1,5 @@
+<launch>
+  <include file="$(find rplidar_ros)/launch/rplidar.launch">
+    <arg name="topic_name" value="scan"/>
+  </include>
+</launch> 

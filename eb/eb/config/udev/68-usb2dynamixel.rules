@@ -1,0 +1,7 @@
+# rules for USB2Dynamixel (larger USB to Dynamixel device)
+
+SUBSYSTEM=="tty", ENV{ID_VENDOR_ID}=="0403", ENV{ID_MODEL_ID}=="6001", ENV{ID_SERIAL_SHORT}=="AI027ZN5", MODE:="0666", OWNER="system", GROUP:="dialout", SYMLINK+="dynamixel"
+
+
+
+

@@ -1,0 +1,17 @@
+# Parameters for Face Recognizer
+
+show_faces_at_launch: false
+
+# Set your detection topic here
+detection_topic: "/body_tracker_array/people"
+
+# Set your camera topic here 
+camera_topic: "/body_tracker_array/image"
+
+# Set your output topics here
+output_person_name_topic: "/body_tracker_array/center_face_name"
+output_topic: "/body_tracker_array/people_with_names"
+
+
+# Set your output topic for RGB Image here (for debug)
+output_topic_rgb: "/body_tracker_array/face_recognizer/image"

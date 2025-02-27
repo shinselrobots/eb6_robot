@@ -1,0 +1,118 @@
+## THIS IS SAMPLE CODE TAKEN FROM EB WHEEL CONTROLLER PROTOTYPE
+## IT IS NOT TESTED OR WORKING
+
+
+
+    def sensor_callback(self, data):
+        # rospy.loginfo("%s:got sensor data" % (self.module_name))
+
+        self.sensor_summary = data
+
+        # pass sensor data to local callback for programmed moves
+        self.programmed_move.sensor_callback(data) 
+
+        '''
+        data.nearest_object_front = self.max_laser_max_range
+        data.nearest_object_front_right = self.max_laser_max_range
+        data.nearest_object_front_left = self.max_laser_max_range
+        data.nearest_object_side_right = self.max_laser_max_range
+        data.nearest_object_side_left = self.max_laser_max_range
+        data.nearest_object_rear = self.max_laser_max_range
+        data.clear_path_gap_direction = 0.0
+        data.clear_path_gap_width = self.max_laser_max_range
+        data.avoidance_range_used = self.avoid_range
+        '''
+        object_front_status = 'OK'
+        object_rear_status = 'OK'
+
+        # ----------------------------------------------------------------------
+        # UPDATE DASHBOARD        
+        # Update status dashboard - Front Sensors
+        if data.nearest_object_front < self.collision_stop_distance_front:
+            object_front_status = 'STOP'
+        elif data.nearest_object_front < self.collision_slow_distance:
+            object_front_status = 'SLOW'
+        elif data.nearest_object_front < self.avoidance_distance:
+            object_front_status = 'AVOID'
+        
+        # Update status dashboard - Rear Sensors
+        if data.nearest_object_rear < self.collision_stop_distance_rear:
+            object_rear_status = 'STOP'
+        elif data.nearest_object_rear < self.collision_slow_distance:
+            object_rear_status = 'SLOW'
+
+        # send update if status changes, or periodically to assure updates are reported
+        self.status_update_counter = self.status_update_counter +1
+        if self.status_update_counter > 50:  # about every 5 seconds
+            self.status_update_counter = 0       
+            self.send_status_update('OBJECT_FRONT', object_front_status)
+            self.send_status_update('OBJECT_REAR', object_rear_status)
+
+        
+    def collision_override(self, requested_speed):
+        # Collision prevention under manual control (non-programmed moves)
+        # If no problem, return the requested speed, else return overridden speed
+
+        return_speed = requested_speed    
+        if not self.collision_prevention_enabled:
+            rospy.loginfo("%s:sensor_data: collision_prevention disabled." % (self.module_name))
+            return return_speed
+        #rospy.loginfo("%s:sensor_data: collision_prevention enabled." % (self.module_name))
+
+        if requested_speed == 0.0:
+            # don't do anything if the robot is stopped with no command to move
+            return return_speed
+
+        # slow down if object detected
+        # TODO ?
+
+        # Prevent collisions for non-programmed moves
+        
+        if requested_speed > 0.0 and data.nearest_object_front < self.collision_stop_distance_front:
+            # Moving forward and object detected ahead
+            if not self.handling_collision:
+                rospy.logwarn('%s: Object Ahead! Stopping!' % (self.module_name))
+                #self.programmed_move.cancel_linear() # Turns still allowed
+                return_speed = 0.0
+                #self.turn_cmd = 0.0
+                #self.collision_turn = self.COLLISION_TURN_SPEED
+                #if data.clear_path_gap_direction < 0.0
+                #    self.collision_turn = self.collision_turn * -1.0 # future, if desired to find clear path
+                #rospy.loginfo("%s:sensor_data: Avoiding collision." % (self.module_name))
+                self.handling_collision = True
+
+        elif requested_speed < 0.0 and data.nearest_object_rear < self.collision_stop_distance_rear:
+            # Moving backward and object detected behind
+            if not self.handling_collision:
+                rospy.logwarn('%s: Object Behind! Stopping!' % (self.module_name))
+                #self.programmed_move.cancel_linear() # turns still allowed
+                return_speed = 0.0
+                #self.turn_cmd = 0.0
+                #self.collision_turn = self.COLLISION_TURN_SPEED
+                #if data.clear_path_gap_direction < 0.0
+                #    self.collision_turn = self.collision_turn * -1.0 # future, if desired to find clear path
+                #rospy.loginfo("%s:sensor_data: Avoiding collision." % (self.module_name))
+                self.handling_collision = True
+
+
+        # Avoid objects (FUTURE FEATURE - Move to a navigation module?)       
+        if False:  #elif data.nearest_object_front < self.avoidance_distance:
+            if not self.handling_avoidance:
+                self.handling_avoidance = True
+                # data.clear_path_gap_direction is turn angle in radians, with max of about 0.785398 (45 degrees)
+                # convert to turn amount range of +/- 1.0 max.
+                turn_speed = (data.clear_path_gap_direction / radians(45)) * 0.5 # scale speed down
+                turn_speed = self.clamp(turn_amount, 0.5) # limit to half max
+                if abs(self.turn_cmd) < abs(turn_speed): # don't override if user is trying to turn more
+                    self.turn_cmd = turn_speed
+
+            else:
+                # was handling avoidance, but path is clear now. Re-center the turn
+                self.turn_cmd = 0.0
+                self.handling_avoidance = False
+
+        return return_speed
+
+
+
+

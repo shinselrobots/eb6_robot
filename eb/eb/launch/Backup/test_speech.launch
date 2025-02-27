@@ -1,0 +1,15 @@
+<launch>
+
+ 
+  
+  <!-- Text to speech (robot voice) and sound effects services -->
+  <rosparam file="$(find eb)/config/jokes.yaml" command="load"/>
+  <include file="$(find robot_sounds)/launch/robot_sounds.launch"/>
+
+  
+  <!-- Speech Recognition 
+  <include file="$(find eb)/launch/include/speech_recognition.launch"/>
+  -->
+
+
+</launch>

@@ -1,0 +1,8 @@
+<launch>
+
+  <node pkg="joy" type="joy_node" name="joystick"/>
+
+  <!-- Joystick buttons to control some hard coded behaviors. -->
+  <node pkg="eb_joybuttons" type="joy_buttons.py" name="joy_buttons" output="screen"/>
+
+</launch>

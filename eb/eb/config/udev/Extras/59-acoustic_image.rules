@@ -1,0 +1,5 @@
+# On precise, for some reason, USER and GROUP are getting ignored.
+# So setting mode = 0666 for now.
+SUBSYSTEM=="tty", ATTRS{idVendor}=="067b", ATTRS{idProduct}=="2303", MODE:="0666", GROUP:="dialout", SYMLINK+="mic_serial"
+
+

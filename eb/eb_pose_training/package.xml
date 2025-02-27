@@ -1,0 +1,8 @@
+<package>
+  <name>eb_pose_training</name>
+  <version>0.0.0</version>
+  <description>Use joystick buttons to learn robot poses</description>
+  <maintainer email="shinsel.robots@gmail.com">Dave Shinsel</maintainer>
+  <license>BSD</license>
+  <buildtool_depend>catkin</buildtool_depend>
+</package>

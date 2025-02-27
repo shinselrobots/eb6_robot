@@ -1,0 +1,14 @@
+<!-- Behavior Server - launches behaviors upon command 
+     Parameters are one of: NOTHING, WAKE, IDLE -->
+
+<launch>
+
+
+  <!-- Behavior command handler. Parameters are one of: NOTHING, WAKE, IDLE  -->
+  <node pkg="eb_behaviors" type="behavior_server.py" name="eb_behaviors" output="screen">
+    <param name="robot_startup_behavior" value="WAKE"/>
+    <param name="robot_idle_behavior" value="IDLE"/>
+  </node>
+
+</launch>
+

@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!-- pointcloud_to_laserscan node, configured for ZR300 mounted on TB2s -->
+
+<launch>
+
+    <arg name="camera" default="camera" />
+    <node pkg="pointcloud_to_laserscan" type="pointcloud_to_laserscan_node" name="pointcloud_to_laserscan">
+
+        <remap from="cloud_in" to="$(arg camera)/points"/>
+        <remap from="scan" to="$(arg camera)/scan"/>
+        <rosparam>
+            target_frame: base_link    # Map laser to floor height
+            transform_tolerance: 0.01
+            min_height: 0.0508    # find any objects higher than this
+            max_height: 1.0 # ignore any objects taller than the robot (using 1 meter for now)
+            angle_min: -0.523  # -30 degrees - ZR300
+            angle_max: 0.523   # +30 degrees - ZR300
+            angle_increment: 0.00327 #0.0087 default. For ZR300: 60 deg/320 pixels = 0.1875 deg/pixel, in radians
+            scan_time: 0.3333
+            range_min: 0.30 # ZR300
+            range_max: 3.0 # ZR300 reliable range
+            use_inf: true
+
+            # Concurrency level, affects number of pointclouds queued for processing and number of threads used
+            # 0 : Detect number of cores
+            # 1 : Single threaded
+            # 2->inf : Parallelism level
+            concurrency_level: 1
+        </rosparam>
+
+    </node>
+
+</launch>

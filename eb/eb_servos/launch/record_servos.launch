@@ -1,0 +1,10 @@
+<!-- 
+  record servo positions
+-->
+
+
+<launch>
+
+  <node pkg="eb_servos" name="record_servos" type="record_servos.py" output="screen">
+  </node>
+</launch>

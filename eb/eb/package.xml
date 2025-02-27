@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<package>
+  <name>eb</name>
+  <version>0.0.0</version>
+  <description>Launch files for the EB (explorer bot) Robot</description>
+  <maintainer email="shinsel.robots@gmail.com">Dave Shinsel</maintainer>
+  <license>BSD</license>
+  <buildtool_depend>catkin</buildtool_depend>
+  <run_depend>joy</run_depend>
+
+</package>

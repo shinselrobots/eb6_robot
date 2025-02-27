@@ -1,0 +1,44 @@
+<launch>
+
+  <!-- SIMPLIFIED launch file for EB Robot. ADD ITEMS TO TEST -->
+
+  <!-- Set GLOBAL parameters that control the demo behaviors -->
+  <param name="/Idle_behavior/enable_people_tracking" type="bool" value="False" />
+  <param name="/Idle_behavior/enable_random_movement" type="bool" value="False" />
+  <param name="/enable_eye_lights" type="bool" value="False" />
+  <param name="/enable_ear_lights" type="bool" value="False" />
+
+   
+  <!-- Arduino in EB Head, controls eyes and ears colors -->
+  <!-- WARNING Feather does not have a serial number, so ports mapped by plug location in USB hub! (see udev rules) --> 
+  <node pkg="rosserial_python" type="serial_node.py" name="head_node" output="screen">
+    <param name="port" value="/dev/head_arduino"/>
+    <param name="baud" value="57600"/>
+  </node>
+
+
+  <!-- Dynamixel Servo Controllers, using modified dynamixel_motor module -->
+  <include file="$(find eb_servos)/launch/servos.launch"/>
+  
+  
+  <!-- Text to speech (robot voice) and sound effects services -->
+  <rosparam file="$(find eb)/config/jokes.yaml" command="load"/>
+  <include file="$(find robot_sounds)/launch/robot_sounds.launch"/>
+
+  
+  <!-- Speech Recognition -->
+  <include file="$(find eb)/launch/include/speech_recognition.launch"/>
+
+  <!-- Behavior plugin loader -->
+       roslaunch behavior_common behavior_common.launch    
+  <node pkg="behavior_common" type="behavior_loader" name="behavior_common_node" output="screen">
+    <param name="robot_startup_behavior" value="/wakeup_behavior"/>
+    <param name="robot_idle_behavior" value="/idle_behavior"/>
+  </node>
+
+  <!-- DISABLED THROW ERROR Pose buttons to allow moving joints into poses for development / training.
+       To invoke from command line: rostopic pub -1 /button_left std_msgs/Bool 1   
+  <node pkg="eb_pose_buttons" type="pose_buttons.py" name="pose_buttons" output="screen"/>
+-->
+
+</launch>

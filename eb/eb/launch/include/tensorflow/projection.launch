@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<launch>
+  <node name="projection" pkg="cob_people_object_detection_tensorflow" type="projection.py" output="screen">
+    <rosparam command="load" file="$(find eb)/launch/include/tensorflow/projection_params.yaml"/>
+  </node>
+</launch>

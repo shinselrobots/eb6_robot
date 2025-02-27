@@ -1,0 +1,27 @@
+# cmd vel mux config
+subscribers:
+  - name:        "Safety Control"
+    topic:       "safety_control"
+    timeout:     1.0
+    priority:    5
+  - name:        "EB Navigaton"
+    topic:       "eb_navigation"
+    timeout:     0.5
+    priority:    4
+  - name:        "Safe reactive controller"
+    topic:       "safety_controller"
+    timeout:     2.0
+    priority:    3 
+  - name:        "Teleop Controller"
+    topic:       "input/teleop"
+    timeout:     0.2
+    priority:    2
+  - name:        "RealSense Controller"
+    topic:       "realsense"
+    timeout:     0.2
+    priority:    1 
+  - name:        "Random Walker"
+    topic:       "random_walker"
+    timeout:     0.2
+    priority:    0
+publisher:       "output/cmd_vel"

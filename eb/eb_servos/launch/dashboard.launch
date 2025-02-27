@@ -1,0 +1,10 @@
+<!-- 
+  display system status gui
+-->
+
+
+<launch>
+
+  <node pkg="eb_servos" name="dashboard" type="dashboard.py" output="screen">
+  </node>
+</launch>

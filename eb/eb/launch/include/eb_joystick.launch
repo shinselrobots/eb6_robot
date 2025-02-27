@@ -1,0 +1,40 @@
+<launch>
+
+  <!-- Joystick related modules for EB Robot. -->
+
+  <!-- NOTE: LOGITECH JOYSTICK DOES NOT WORK ON JETSON NANO! (good thing we use Intel NUC!)
+       see https://github.com/jetsonhacks/logitech-f710-module -->
+
+  <!-- Joystick input, which publishes a generic '/joy' Joystick topic.
+         It is received by the eb_teleop_joy node below -->
+  <node pkg="joy" type="joy_node" name="joystick" output="screen"/>
+  
+  <!-- Joystick buttons to control some hard coded behaviors -->
+  <node name="joy_button_cmds" pkg="eb_joystick_button_cmds" type="eb_joystick_button_cmds.py" output="screen"/>
+
+  <!-- Enable control of head pan/tilt via joystick (like TB2S)
+       TODO - Do we need to mix with other commands like random movements, or just let latest command win? -->
+    <node name="joy_to_dynamixel" pkg="eb_servos" type="joy_to_dynamixel.py" output="screen"/> 
+
+
+
+  <!-- DISABLED (Input #1, stage 2) This is the Joystick teleop node, which converts Joystick messages
+       to Twist messages. It is received by the priority and speed control node below 
+       NOTE: make sure the green "mode" light on the Logitech Joystick is OFF!
+       
+  <node pkg="eb_teleop" type="eb_teleop_joy" name="eb_teleop_joystick"> output="screen"
+    <param name="scale_angular" value="0.1"/>
+    <param name="scale_linear" value="0.5"/>
+    <remap from="eb_teleop_joystick/cmd_vel" to="move_base/priority2"/>  
+  </node>
+  -->
+  
+  
+  <!-- DISABLED TODO FUTURE WALKING CONTROL
+       subscribes to move_base/priority<n>" messages, and outputs "/odom" and "/wheel_motors_cmd_vel" to
+       the Sabertooth node below 
+  <node pkg="wheel_control" type="wheel_control_node" name="wheel_control_node" output="screen"/>
+  -->
+
+
+</launch>

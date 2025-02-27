@@ -1,0 +1,11 @@
+<launch> 
+
+  <!-- launch people and object Tracker 
+  <node pkg="eb" type="activated_tensorflow.sh"
+    name="activated_cob_people_object_tracker" 
+    args="1 eb cob_people_object_tracker.launch"
+    output="screen">
+  </node>
+ -->
+
+</launch>

@@ -1,0 +1,5 @@
+<launch>
+  <node pkg="streaming_recognition" type="streaming_speech_reco.py" name="streaming_recognition" output="screen"/>
+  </launch>
+ 
+

@@ -1,0 +1,73 @@
+<launch>
+
+  <!-- Launch EB Robot sensors and base systems -->
+
+   <!-- Set GLOBAL parameters that control the demo and debug behaviors -->
+  <param name="/Idle_behavior/enable_people_tracking" type="bool" value="True" />
+  <param name="/Idle_behavior/enable_random_movement" type="bool" value="True" />
+  <param name="/Idle_behavior/use_ai" type="bool" value="True" />
+
+    
+  <!-- Head and Body Arduinos -->
+  <include file="$(find eb)/launch/include/arduinos.launch"/>
+
+  <!-- Dynamixel Servo Controllers, using modified dynamixel_motor module -->
+  <include file="$(find eb_servos)/launch/servos.launch"/>
+  
+  <!-- Robot Voice: Text to speech server  -->   
+  <include file="$(find robot_voice)/launch/robot_voice.launch"/>
+
+  <!-- Wheel motor controller. Accepts velocity messages and joystick inputs.
+       Also handles joystick buttons and collision avoidance -->
+  <include file="$(find eb_wheel_control)/launch/eb_wheel_control.launch"/>
+
+  <!-- Streaming Speech Recognition and Keyword detector (for Wake) -->
+  <include file="$(find streaming_recognition)/launch/streaming_recognition.launch"/>
+
+  <!-- Face Detector. Finds faces to track -->
+  <include file="$(find face_detector)/launch/face_detector.launch"/>
+
+  <!-- Face Recognizer. Looks for matches from face database -->
+  <include file="$(find face_recognizer)/launch/face_recognizer.launch"/>
+
+  <!-- EB Face Tracker. Tracks faces and does random movements when idle. -->
+  <include file="$(find eb_face_tracker)/launch/eb_face_tracker.launch"/>
+
+ 
+  <!-- CAMERA OPTIONS -->
+  <!-- launch USB, realsense, or bodytracker camera driver -->
+  <include file="$(find eb)/launch/include/rgb_1920_eye_camera.launch"/>
+  <include file="$(find eb)/launch/include/rs_848_depth_only.launch"/>
+  <include file="$(find eb)/launch/include/depthimage_to_laserscan.launch"/>
+
+  <!-- Sensor Fusion. Combines laserscans and other sensors into key information -->
+  <include file="$(find sensor_fusion)/launch/sensor_fusion.launch"/>
+
+  <!-- Joystick input, which publishes a generic '/joy' Joystick topic. Disable when not needed -->
+  <!-- *** DISABLED ***
+  <node pkg="joy" type="joy_node" name="joystick" output="screen"/>
+  -->
+
+  <!-- Dashboards for system monitoring and control -->
+  <include file="$(find eb_servos)/launch/dashboard.launch"/>
+
+
+
+
+  <!-- DISABLED 
+
+  <include file="$(find eb_sysmon)/launch/eb_sysmon.launch"/>
+
+  <include file="$(find ai_chat)/launch/ai_chat.launch"/>
+
+  Behavior command handler. Parameters are one of: NOTHING, WAKE, IDLE  
+  <node name="eb_behaviors" pkg="eb_behaviors" type="behavior_server.py" required="true" output="screen">
+    <param name="robot_startup_behavior" value="WAKE"/>
+    <param name="robot_idle_behavior" value="IDLE"/>
+  </node>
+
+ DISABLED --> 
+
+
+
+</launch>

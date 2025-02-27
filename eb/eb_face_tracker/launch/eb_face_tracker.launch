@@ -1,0 +1,10 @@
+<!-- EB Face Tracker,
+  Tracks faces and does random movements when idle.
+  Movement enabled by Behavior server
+-->
+
+<launch>
+  <node pkg="eb_face_tracker" type="face_tracker.py" name="eb_face_tracker" output="screen"> </node>
+
+</launch>
+

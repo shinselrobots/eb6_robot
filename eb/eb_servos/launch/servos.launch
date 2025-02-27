@@ -1,0 +1,86 @@
+<!-- Joint controller for all EB Robot servos -->
+
+<launch>
+
+  <!-- NOTE! To get full speed (update_rate > 5), need to reduce serial latency!
+     To see actual update rate:  rostopic echo /diagnostics_dynamixel | grep -A 2 'Update Rate'
+     With 16 servos at 1Mb/s, measured max rate is ~ 25 updates/sec (40ms), which is pretty good!
+     
+     This script will fix it, but needs to be run after each reboot!
+        #!/bin/bash
+        echo -n "Latency timer currently set to: "
+        cat /sys/bus/usb-serial/devices/ttyUSB0/latency_timer 
+        echo -n "Enter password for sudo rights: "
+        read -s pass
+        echo "$pass" | sudo -S sh -c 'echo 1 > /sys/bus/usb-serial/devices/ttyUSB0/latency_timer'
+        echo
+        echo -n "Latency timer now set to: "
+        cat /sys/bus/usb-serial/devices/ttyUSB0/latency_timer
+  -->    
+
+  <!-- Start controller manager.  -->
+  <node name="dynamixel_manager" pkg="dynamixel_controllers" type="controller_manager.py" required="true" output="screen">
+    <rosparam>
+      namespace: robot_dynamixel_manager
+      serial_ports:
+        dynamixel_port:
+            port_name: "/dev/dynamixel"
+            baud_rate: 2000000
+            min_motor_id: 1
+            max_motor_id: 14
+            update_rate: 65
+    </rosparam>
+  </node> 
+ <!-- WARNING! FAST UPDATE RATE REQUIRES:
+    1. DYNAMIXEL_RESPONSE_WAIT_TIME_SUPER_FAST set in dynamixel_driver/src/dynamixel_driver/dynamixel_io.py
+    2. Every Dynamixel: Wait time of "10" (20us) must be set in servo ROM
+    3. Ubuntu USB latency timer set to 1.   cat /sys/bus/usb-serial/devices/ttyUSB0/latency_timer
+    Expected real max update rate 59hz to 63hz 
+ -->
+ 
+ 
+  <!-- Start joint controllers -->  
+  <rosparam file="$(find eb_servos)/config/dynamixel_params.yaml" command="load"/>
+
+  <node name="dynamixel_controller_spawner" pkg="dynamixel_controllers" type="controller_spawner.py"
+        args="--manager=robot_dynamixel_manager
+              --port=dynamixel_port
+
+        right_antenna_joint 
+        left_antenna_joint 
+        head_sidetilt_joint 
+        head_pan_joint
+        head_tilt_joint 
+        neck_raise_joint
+
+        right_leg_thigh_lift_joint
+        right_leg_knee_bend_joint
+        right_leg_ankle_rotate_joint
+        right_wheel_motor_joint
+
+        left_leg_thigh_lift_joint
+        left_leg_knee_bend_joint
+        left_leg_ankle_rotate_joint
+        left_wheel_motor_joint
+        
+        "
+        output="screen" />
+
+
+
+  <!-- NOTE! Trajectory controllers DISABLED in this version. Are they needed? -->
+
+
+    
+  <!-- Publish position, velocity, and effort for each servo  -->
+   <node name="dynamixel_joint_state_publisher" pkg="eb_servos" type="dynamixel_joint_state_publisher.py" output="screen" />
+  
+  
+  <!-- Provide consolidation service that provides current status of all joints        
+        this consolidates all the info for joint motion control.  Not used for moveit.  -->
+   <node name="joint_states_service" pkg="eb_servos" type="joint_states_service.py" output="screen" />
+  
+
+
+</launch>
+

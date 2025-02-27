@@ -1,0 +1,20 @@
+<package format="2">
+  <name>eb_servos</name>
+  <version>0.0.0</version>
+  <description>Robot servo controller</description>
+  <maintainer email="shinsel.robots@gmail.com">Dave Shinsel</maintainer>
+  <license>BSD</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <build_depend>message_generation</build_depend>
+  <build_depend>dynamixel_controllers</build_depend>
+
+  <exec_depend>message_runtime</exec_depend>
+  <exec_depend>dynamixel_controllers</exec_depend>
+
+
+
+
+
+</package>

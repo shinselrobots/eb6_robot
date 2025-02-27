@@ -1,0 +1,52 @@
+<launch> 
+
+  <!-- 
+    launch camera, then tensorflow people and object detection.
+    For each detector, launch a script to optionally sleep "n" seconds, 
+    activate the python virtual environment, and then launch the detector 
+  -->
+
+
+  <!-- launch cv capture  DISABLED (use this with generic camera)
+  <node pkg="cv_camera" type="cv_camera_node" name="cv_camera" output="screen">
+    <param name="device_id" value="2"/>
+  </node>
+  -->
+
+  <!-- launch realsense2 camera (D400 series)-->
+  <include file="$(find realsense2_camera)/launch/rs_aligned_depth.launch"/>
+
+  <!-- Debug: launch image viewer to show raw camera feed   DISABLED
+  <node name="image_view" pkg="image_view" type="image_view" respawn="false" output="screen"> 
+    <remap from="image" to="/cv_camera/image_raw"/> 
+    <param name="autosize" value="true" /> 
+  </node> 
+   -->
+
+  <!-- launch tensorflow people and object detection. -->
+  <node pkg="eb" type="activated_tensorflow.sh"
+    name="activated_cob_people_object_detection_tensorflow" 
+    args="1 eb cob_people_object_detection_tensorflow.launch"
+    output="screen">
+  </node>
+
+  <!-- launch tensorflow Face Recognizer 
+  <node pkg="eb" type="activated_tensorflow.sh"
+    name="activated_cob_face_recognizer" 
+    args="1 eb cob_face_recognizer.launch"
+    output="screen">
+  </node>
+   -->
+
+  <!-- launch people and object Tracker 
+  <node pkg="eb" type="activated_tensorflow.sh"
+    name="activated_cob_people_object_tracker" 
+    args="1 eb cob_people_object_tracker.launch"
+    output="screen">
+  </node>
+ -->
+
+  <!-- launch rviz to view the tensorflow images -->
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find eb)/launch/include/tensorflow/rviz/view_tensorflow_image.rviz" />
+
+</launch>

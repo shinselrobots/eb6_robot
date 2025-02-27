@@ -1,0 +1,8 @@
+# rules for Arduino Mega in Base
+# NOTE:  Serial number supplied to differentiate between head and base Arduino Mega's
+
+SUBSYSTEM=="tty", ENV{ID_VENDOR_ID}=="2a03", ENV{ID_MODEL_ID}=="0042", ENV{ID_SERIAL_SHORT}=="754353530383516180A0", MODE:="0666", GROUP:="dialout", SYMLINK+="base_arduino"
+ATTRS{idVendor}=="2a03", ENV{ID_MM_DEVICE_IGNORE}="1"
+
+
+

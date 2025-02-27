@@ -1,0 +1,285 @@
+# EB Robot
+# Phrases recognized as commands
+# Note that these are parsed in order. First match wins!
+# So, put overlapping commands first (E.g. "stop listening" before "stop")
+# 
+
+commands:
+
+- description: "Microphone On"
+  required_word_lists:
+  - "microphone on"
+  - "start listening"
+  - "enable microphone"
+  intent: MICROPHONE_ON
+
+- description: "Microphone Off"
+  required_word_lists:
+  - "microphone off"
+  - "stop listening"
+  - "don't listen"
+  intent: MICROPHONE_OFF
+
+- description: "AI Enable"
+  required_word_lists:
+  - "let's chat"
+  - "let's talk"
+  - "hello"
+  - "enable ai"
+  intent: AI_ENABLE
+  
+- description: "AI Enable with response to speak"
+  required_word_lists:
+  - "how are you"
+  intent: AI_ENABLE_WITH_RESPONSE
+  
+- description: "AI Disable"
+  required_word_lists:
+  - "command mode"
+  - "stop talking"
+  - "don't talk"
+  - "don't chat"
+  intent: AI_DISABLE
+
+- description: "Stop command"
+  required_word_lists:
+  - "stop moving"
+  - "stop"
+  intent: STOP
+
+- description: "Dance"
+  required_word_lists:
+  - "dance"
+  intent: DANCE
+
+- description: "Happy"
+  required_word_lists:
+  - "happy"
+  intent: HAPPY
+
+- description: "Lights toggle"
+  required_word_lists:
+  - "lights on"
+  - "lights off"
+  intent: LIGHTS
+  param1: "toggle"
+  
+- description: "Tell a star wars joke command"
+  required_word_lists:
+  - "tell star wars joke"
+  - "tell star wars jokes"
+  - "know star wars jokes"
+  intent: TELL_A_JOKE
+  param1: "STAR_WARS_JOKES"
+
+- description: "Tell a joke command"
+  required_word_lists:
+  - "another joke"
+  - "some more jokes"
+  intent: TELL_A_JOKE
+  param1: "BEST_JOKES"
+
+- description: "Tell a joke command"
+  required_word_lists:
+  - "tell a joke"
+  - "tell some joke"
+  - "tell some jokes"
+  intent: TELL_A_JOKE
+  param1: "BEST_JOKES"
+
+- description: "Tell time command"
+  required_word_lists:
+  - "what time"
+  intent: TELL_TIME
+
+- description: "bow command"
+  required_word_lists:
+  - "take a bow"
+  intent: BOW
+
+- description: "Introduce yourself command"
+  required_word_lists:
+  - "introduce yourself"
+  intent: TELL_INTRO
+
+- description: "wave command"
+  required_word_lists:
+  - "wave"
+  - "hello"
+  intent: WAVE
+
+- description: "head center command"
+  required_word_lists:
+  - "head center"
+  - "look forward"
+  intent: HEAD_CENTER
+
+- description: "wakeup command"
+  required_word_lists:
+  - "wake up"
+  intent: WAKEUP
+
+- description: "sleep command"
+  required_word_lists:
+  - "go to sleep"
+  - "sleep"
+  intent: SLEEP
+
+- description: "stand taller command"
+  required_word_lists:
+  - "stand taller"
+  intent: POSE
+  param1: "UP"
+  param2: 0.3
+
+- description: "stand tall command"
+  required_word_lists:
+  - "stand tall"
+  - "stand taller"
+  - "and tall"
+  intent: POSE
+  param1: "4"
+  param2: 0.3
+
+- description: "stand up command"
+  required_word_lists:
+  - "stand up"
+  - "and up"
+  intent: POSE
+  param1: "3"
+  param2: 0.3
+
+- description: "squat command"
+  required_word_lists:
+  - "squat"
+  - "crouch"
+  - "stand shorter"
+  intent: POSE
+  param1: "DOWN"
+  param2: 0.3
+
+- description: "stand mid command"
+  required_word_lists:
+  - "sit up"
+  - "stand"
+  intent: POSE
+  param1: "2"
+  param2: 0.3
+
+- description: "sit down command"
+  required_word_lists:
+  - "sit"
+  - "sit down"
+  - "relax"
+  intent: POSE
+  param1: "1"
+  param2: 0.3
+
+- description: "head center command"
+  required_word_lists:
+  - "head center"
+  - "look forward"
+  intent: HEAD_CENTER
+
+- description: "stretch legs command"
+  required_word_lists:
+  - "test joints"
+  - "test legs"
+  - "stretch legs"
+  intent: STRETCH_LEGS
+
+- description: "Turn right"
+  required_word_lists:
+  - "turn right"
+  - "turn right"
+  intent: TURN
+  param1: -45.0 # right turn
+  param2: 0.5   # speed
+
+- description: "Turn left"
+  required_word_lists:
+  - "turn left"
+  - "turn left"
+  intent: TURN
+  param1: 45.0  # left turn
+  param2: 0.5   # speed
+
+- description: "Turn Other"
+  required_word_lists:
+  - "turn right/left"
+  - "turn left/right"
+  param1: -45.0 # right turn by default
+  param2: 0.5   # speed
+
+
+- description: "Spin right"
+  required_word_lists:
+  - "spin right"
+  - "spinrite"
+  intent: TURN
+  param1: -180.0
+  param2: 0.5
+
+- description: "Spin left"
+  required_word_lists:
+  - "spin left"
+  - "spinleft"
+  intent: TURN
+  param1: 180.0
+  param2: 0.5
+
+- description: "Spin circle Left"
+  required_word_lists:
+  - "spin left circle"
+  - "spinleft circle"
+  intent: TURN
+  param1: 360.0
+  param2: 0.5
+  
+- description: "Spin circle Right"
+  required_word_lists:
+  - "spin right circle"
+  - "spinright circle"
+  - "spin circle" 
+  intent: TURN
+  param1: 360.0
+  param2: 0.5
+  
+
+- description: "Move Short"
+  required_word_lists:
+  - "move forward"
+  - "move ford"
+  - "move foot"
+  - "come closer"
+  - "come forward"
+  intent: MOVE
+  param1: 0.30   # distance in meters (positive = forward) about a foot
+  param2: 0.5   # speed 0-1.0
+
+- description: "Move Far"
+  required_word_lists:
+  - "move feet"
+  - "move meter"
+  intent: MOVE
+  param1: 1.0
+  param2: 0.5   # speed 0-1.0
+
+- description: "Move back"
+  required_word_lists:
+  - "move back"
+  - "back up"
+  - "backup little"
+  intent: MOVE
+  param1: -0.30 # EB has no backup collision sensor yet
+  param2: 0.4   # speed 0-1.0
+
+- description: "Follow me"
+  required_word_lists:
+  - "follow me"
+  intent: FOLLOW_ME
+
+
+
+
+

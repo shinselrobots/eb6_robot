@@ -1,0 +1,13 @@
+# Set your detection topic here
+detection_topic: "/object_detection/detections"
+
+# Set your camera topic here 
+#camera_topic: "/camera/rgb/image_rect_color"
+#camera_topic: "/cv_camera/image_raw"
+camera_topic: "/camera/color/image_raw"
+
+# Set your output topic here
+output_topic: "/face_recognizer/faces"
+
+# Set your output topic for RGB Image here
+output_topic_rgb: "/face_recognizer/faces/image"

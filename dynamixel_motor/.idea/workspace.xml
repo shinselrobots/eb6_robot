@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="06088b1f-c972-4875-97ea-fa03fca2b232" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.travis.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/.travis.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LICENSE" beforeDir="false" afterPath="$PROJECT_DIR$/LICENSE" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dynamixel_controllers/CHANGELOG.rst" beforeDir="false" afterPath="$PROJECT_DIR$/dynamixel_controllers/CHANGELOG.rst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dynamixel_controllers/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/dynamixel_controllers/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dynamixel_controllers/launch/controller_manager.launch" beforeDir="false" afterPath="$PROJECT_DIR$/dynamixel_controllers/launch/controller_manager.launch" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dynamixel_controllers/mainpage.dox" beforeDir="false" afterPath="$PROJECT_DIR$/dynamixel_controllers/mainpage.dox" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dynamixel_controllers/nodes/controller_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/dynamixel_controllers/nodes/controller_manager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dynamixel_controllers/nodes/controller_spawner.py" beforeDir="false" afterPath="$PROJECT_DIR$/dynamixel_controllers/nodes/controller_spawner.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dynamixel_controllers/package.xml" beforeDir="false" afterPath="$PROJECT_DIR$/dynamixel_controllers/package.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dynamixel_controllers/setup.py" beforeDir="false" afterPath="$PROJECT_DIR$/dynamixel_controllers/setup.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dynamixel_controllers/src/dynamixel_controllers/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/dynamixel_controllers/src/dynamixel_controllers/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dynamixel_controllers/src/dynamixel_controllers/joint_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/dynamixel_controllers/src/dynamixel_controllers/joint_controller.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dynamixel_controllers/src/dynamixel_controllers/joint_position_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/dynamixel_controllers/src/dynamixel_controllers/joint_position_controller.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dynamixel_controllers/src/dynamixel_controllers/joint_position_controller_dual_motor.py" beforeDir="false" afterPath="$PROJECT_DIR$/dynamixel_controllers/src/dynamixel_controllers/joint_position_controller_dual_motor.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dynamixel_controllers/src/dynamixel_controllers/joint_torque_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/dynamixel_controllers/src/dynamixel_controllers/joint_torque_controller.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dynamixel_controllers/src/dynamixel_controllers/joint_torque_controller_dual_motor.py" beforeDir="false" afterPath="$PROJECT_DIR$/dynamixel_controllers/src/dynamixel_controllers/joint_torque_controller_dual_motor.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dynamixel_controllers/src/dynamixel_controllers/joint_trajectory_action_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/dynamixel_controllers/src/dynamixel_controllers/joint_trajectory_action_controller.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dynamixel_controllers/srv/RestartController.srv" beforeDir="false" afterPath="$PROJECT_DIR$/dynamixel_controllers/srv/RestartController.srv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dynamixel_controllers/srv/SetComplianceMargin.srv" beforeDir="false" afterPath="$PROJECT_DIR$/dynamixel_controllers/srv/SetComplianceMargin.srv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dynamixel_controllers/srv/SetCompliancePunch.srv" beforeDir="false" afterPath="$PROJECT_DIR$/dynamixel_controllers/srv/SetCompliancePunch.srv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dynamixel_controllers/srv/SetComplianceSlope.srv" beforeDir="false" afterPath="$PROJECT_DIR$/dynamixel_controllers/srv/SetComplianceSlope.srv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dynamixel_controllers/srv/SetSpeed.srv" beforeDir="false" afterPath="$PROJECT_DIR$/dynamixel_controllers/srv/SetSpeed.srv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dynamixel_controllers/srv/SetTorqueLimit.srv" beforeDir="false" afterPath="$PROJECT_DIR$/dynamixel_controllers/srv/SetTorqueLimit.srv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dynamixel_controllers/srv/StartController.srv" beforeDir="false" afterPath="$PROJECT_DIR$/dynamixel_controllers/srv/StartController.srv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dynamixel_controllers/srv/StopController.srv" beforeDir="false" afterPath="$PROJECT_DIR$/dynamixel_controllers/srv/StopController.srv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dynamixel_controllers/srv/TorqueEnable.srv" beforeDir="false" afterPath="$PROJECT_DIR$/dynamixel_controllers/srv/TorqueEnable.srv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dynamixel_driver/CHANGELOG.rst" beforeDir="false" afterPath="$PROJECT_DIR$/dynamixel_driver/CHANGELOG.rst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dynamixel_driver/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/dynamixel_driver/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dynamixel_driver/mainpage.dox" beforeDir="false" afterPath="$PROJECT_DIR$/dynamixel_driver/mainpage.dox" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dynamixel_driver/package.xml" beforeDir="false" afterPath="$PROJECT_DIR$/dynamixel_driver/package.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dynamixel_driver/scripts/README" beforeDir="false" afterPath="$PROJECT_DIR$/dynamixel_driver/scripts/README" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dynamixel_driver/scripts/change_id.py" beforeDir="false" afterPath="$PROJECT_DIR$/dynamixel_driver/scripts/change_id.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dynamixel_driver/scripts/info_dump.py" beforeDir="false" afterPath="$PROJECT_DIR$/dynamixel_driver/scripts/info_dump.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dynamixel_driver/scripts/set_servo_config.py" beforeDir="false" afterPath="$PROJECT_DIR$/dynamixel_driver/scripts/set_servo_config.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dynamixel_driver/scripts/set_torque.py" beforeDir="false" afterPath="$PROJECT_DIR$/dynamixel_driver/scripts/set_torque.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dynamixel_driver/setup.py" beforeDir="false" afterPath="$PROJECT_DIR$/dynamixel_driver/setup.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dynamixel_driver/src/dynamixel_driver/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/dynamixel_driver/src/dynamixel_driver/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dynamixel_driver/src/dynamixel_driver/dynamixel_const.py" beforeDir="false" afterPath="$PROJECT_DIR$/dynamixel_driver/src/dynamixel_driver/dynamixel_const.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dynamixel_driver/src/dynamixel_driver/dynamixel_io.py" beforeDir="false" afterPath="$PROJECT_DIR$/dynamixel_driver/src/dynamixel_driver/dynamixel_io.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dynamixel_driver/src/dynamixel_driver/dynamixel_serial_proxy.py" beforeDir="false" afterPath="$PROJECT_DIR$/dynamixel_driver/src/dynamixel_driver/dynamixel_serial_proxy.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dynamixel_motor/CHANGELOG.rst" beforeDir="false" afterPath="$PROJECT_DIR$/dynamixel_motor/CHANGELOG.rst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dynamixel_motor/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/dynamixel_motor/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dynamixel_motor/package.xml" beforeDir="false" afterPath="$PROJECT_DIR$/dynamixel_motor/package.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dynamixel_msgs/CHANGELOG.rst" beforeDir="false" afterPath="$PROJECT_DIR$/dynamixel_msgs/CHANGELOG.rst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dynamixel_msgs/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/dynamixel_msgs/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dynamixel_msgs/mainpage.dox" beforeDir="false" afterPath="$PROJECT_DIR$/dynamixel_msgs/mainpage.dox" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dynamixel_msgs/msg/JointState.msg" beforeDir="false" afterPath="$PROJECT_DIR$/dynamixel_msgs/msg/JointState.msg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dynamixel_msgs/msg/MotorState.msg" beforeDir="false" afterPath="$PROJECT_DIR$/dynamixel_msgs/msg/MotorState.msg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dynamixel_msgs/msg/MotorStateList.msg" beforeDir="false" afterPath="$PROJECT_DIR$/dynamixel_msgs/msg/MotorStateList.msg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dynamixel_msgs/package.xml" beforeDir="false" afterPath="$PROJECT_DIR$/dynamixel_msgs/package.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dynamixel_tutorials/CHANGELOG.rst" beforeDir="false" afterPath="$PROJECT_DIR$/dynamixel_tutorials/CHANGELOG.rst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dynamixel_tutorials/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/dynamixel_tutorials/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dynamixel_tutorials/config/dynamixel_joint_controllers.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/dynamixel_tutorials/config/dynamixel_joint_controllers.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dynamixel_tutorials/launch/controller_manager.launch" beforeDir="false" afterPath="$PROJECT_DIR$/dynamixel_tutorials/launch/controller_manager.launch" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dynamixel_tutorials/launch/controller_spawner.launch" beforeDir="false" afterPath="$PROJECT_DIR$/dynamixel_tutorials/launch/controller_spawner.launch" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dynamixel_tutorials/mainpage.dox" beforeDir="false" afterPath="$PROJECT_DIR$/dynamixel_tutorials/mainpage.dox" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dynamixel_tutorials/package.xml" beforeDir="false" afterPath="$PROJECT_DIR$/dynamixel_tutorials/package.xml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/dynamixel_controllers/nodes/controller_manager.py" root0="SKIP_INSPECTION" />
+    <setting file="file:///usr/lib/python3/dist-packages/serial/serialposix.py" root0="SKIP_INSPECTION" />
+    <setting file="file:///usr/lib/python3/dist-packages/serial/serialutil.py" root0="SKIP_INSPECTION" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2NyX2sF9auExXJ03aJzediSbIRV" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/system/catkin_robot/src/dynamixel_motor/dynamixel_driver/scripts/info_dump.py&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;trusted.hosts&quot;
+  }
+}</component>
+  <component name="RunManager">
+    <configuration name="info_dump" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+      <module name="dynamixel_motor" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="/usr/bin/python3.8" />
+      <option name="SDK_NAME" value="Python 3.8" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/dynamixel_driver/scripts" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/dynamixel_driver/scripts/info_dump.py" />
+      <option name="PARAMETERS" value="&quot;-p&quot; &quot;/dev/ttyUSB1&quot; &quot;1&quot; &quot;2&quot; &quot;3&quot; &quot;4&quot; &quot;5&quot; &quot;6&quot; &quot;7&quot; &quot;8&quot; &quot;9&quot; &quot;10&quot; &quot;11&quot; &quot;12&quot;" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="06088b1f-c972-4875-97ea-fa03fca2b232" name="Changes" comment="" />
+      <created>1680637092247</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1680637092247</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/dynamixel_driver/src/dynamixel_driver/dynamixel_io.py</url>
+          <line>131</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/dynamixel_driver/src/dynamixel_driver/dynamixel_io.py</url>
+          <line>168</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+        <line-breakpoint suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/dynamixel_driver/src/dynamixel_driver/dynamixel_io.py</url>
+          <line>209</line>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+        <line-breakpoint suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/dynamixel_driver/src/dynamixel_driver/dynamixel_io.py</url>
+          <line>928</line>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+        <line-breakpoint suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/dynamixel_driver/src/dynamixel_driver/dynamixel_io.py</url>
+          <line>931</line>
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
+        <line-breakpoint suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/dynamixel_driver/src/dynamixel_driver/dynamixel_io.py</url>
+          <line>121</line>
+          <option name="timeStamp" value="18" />
+        </line-breakpoint>
+        <line-breakpoint suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/dynamixel_driver/src/dynamixel_driver/dynamixel_io.py</url>
+          <line>107</line>
+          <option name="timeStamp" value="19" />
+        </line-breakpoint>
+        <line-breakpoint suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/dynamixel_driver/src/dynamixel_driver/dynamixel_io.py</url>
+          <line>132</line>
+          <option name="timeStamp" value="24" />
+        </line-breakpoint>
+        <line-breakpoint suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/dynamixel_driver/src/dynamixel_driver/dynamixel_io.py</url>
+          <line>97</line>
+          <option name="timeStamp" value="25" />
+        </line-breakpoint>
+        <line-breakpoint suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/dynamixel_driver/src/dynamixel_driver/dynamixel_io.py</url>
+          <line>106</line>
+          <option name="timeStamp" value="26" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/dynamixel_driver/src/dynamixel_driver/dynamixel_io.py</url>
+          <line>98</line>
+          <option name="timeStamp" value="28" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/dynamixel_driver/src/dynamixel_driver/dynamixel_io.py</url>
+          <line>102</line>
+          <option name="timeStamp" value="29" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/dynamixel_controllers/nodes/controller_manager.py</url>
+          <line>222</line>
+          <option name="timeStamp" value="30" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>

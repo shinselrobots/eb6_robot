@@ -1,0 +1,89 @@
+<!-- Joint controller for all EB Robot servos -->
+
+<launch>
+  <node name="dynamixel_manager" pkg="dynamixel_controllers" type="controller_manager.py" required="true" output="screen">
+    <rosparam>
+      namespace: robot_dynamixel_manager
+      serial_ports:
+        dynamixel_port:
+            port_name: "/dev/dynamixel"
+            baud_rate: 1000000
+            min_motor_id: 3
+            max_motor_id: 14
+            update_rate: 20 
+    </rosparam>
+  </node>
+ 
+  <!-- Start joint controllers -->  
+  <rosparam file="$(find eb_servos)/config/dynamixel_params.yaml" command="load"/>
+
+  <node name="dynamixel_controller_spawner" pkg="dynamixel_controllers" type="controller_spawner.py"
+        args="--manager=robot_dynamixel_manager
+              --port=dynamixel_port
+
+        head_sidetilt_joint 
+        head_pan_joint
+        head_tilt_joint 
+        neck_raise_joint
+        
+        right_leg_thigh_lift_joint
+        right_leg_knee_bend_joint
+        right_leg_ankle_rotate_joint
+
+        left_leg_thigh_lift_joint
+        left_leg_knee_bend_joint
+        left_leg_ankle_rotate_joint
+        "
+        output="screen" />
+
+  <!-- Start head joints trajectory controller (does not include antenna and neck raise, which are handled manually -->
+    <rosparam file="$(find eb_servos)/config/head_trajectory_controller.yaml" command="load"/>
+    <node name="head_controller_spawner_meta" pkg="dynamixel_controllers" type="controller_spawner.py"
+        args="--manager=robot_dynamixel_manager
+                --type=meta
+
+          head_controller
+            head_sidetilt_joint
+            head_pan_joint
+            head_tilt_joint
+          "
+        output="screen"/>
+        
+
+  <!-- Start right leg joints trajectory controller -->
+    <rosparam file="$(find eb_servos)/config/right_leg_trajectory_controller.yaml" command="load"/>
+    <node name="right_leg_controller_spawner_meta" pkg="dynamixel_controllers" type="controller_spawner.py"
+        args="--manager=robot_dynamixel_manager
+                --type=meta
+
+          right_leg_controller
+            right_leg_thigh_lift_joint
+            right_leg_knee_bend_joint
+            right_leg_ankle_rotate_joint         
+          "
+        output="screen"/>
+        
+
+  <!-- Start left leg joints trajectory controller -->
+    <rosparam file="$(find eb_servos)/config/left_leg_trajectory_controller.yaml" command="load"/>
+    <node name="left_leg_controller_spawner_meta" pkg="dynamixel_controllers" type="controller_spawner.py"
+        args="--manager=robot_dynamixel_manager
+                --type=meta
+
+          left_leg_controller
+            left_leg_thigh_lift_joint
+            left_leg_knee_bend_joint
+            left_leg_ankle_rotate_joint            
+          "
+        output="screen"/>
+  
+  <!-- Publish position, velocity, and effort for each servo -->
+   <node name="dynamixel_joint_state_publisher" pkg="eb_servos" type="dynamixel_joint_state_publisher.py" output="screen" />
+
+  <!-- Provide consolidation service that provides current status of all joints        
+        this consolidates all the info for joint motion control.  not used for moveit.  -->
+   <node name="joint_states_service" pkg="eb_servos" type="joint_states_service.py" output="screen" />
+
+
+</launch>
+

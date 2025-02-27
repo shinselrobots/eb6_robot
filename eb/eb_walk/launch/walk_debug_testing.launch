@@ -1,0 +1,17 @@
+<launch>
+
+
+  <!-- Dynamixel Servo Controllers, using modified dynamixel_motor module -->
+  <include file="$(find eb_servos)/launch/servos.launch"/>
+
+  <!-- Joystick input, which publishes a generic '/joy' Joystick topic. -->
+  <!-- NOTE: LOGITECH JOYSTICK DOES NOT WORK ON JETSON NANO! (good thing we use Intel NUC!)
+       see https://github.com/jetsonhacks/logitech-f710-module -->
+  <node pkg="joy" type="joy_node" name="joystick" output="screen"/>
+
+
+  <node name="eb_walk" pkg="eb_walk" type="eb_walk.py" output="screen"/>
+
+
+
+</launch>

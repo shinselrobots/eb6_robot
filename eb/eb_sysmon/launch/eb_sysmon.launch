@@ -1,0 +1,9 @@
+<!-- System Monitor  -->
+
+<launch>
+
+  <node pkg="eb_sysmon" type="sysmon.py" name="eb_sysmon" output="screen">
+  </node>
+
+</launch>
+

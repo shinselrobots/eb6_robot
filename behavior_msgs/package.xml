@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>behavior_msgs</name>
+  <version>0.1.0</version>
+  <description>behavior request message</description>
+  <maintainer email="shinsel.robots@gmail.com">Dave Shinsel</maintainer>
+  <url>https://github.com/shinselrobots</url>
+  <license>Apache-2</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <build_depend>roscpp</build_depend>
+  <build_depend>rospy</build_depend>
+  <build_depend>std_msgs</build_depend>
+  <build_depend>message_generation</build_depend>
+
+  <exec_depend>std_msgs</exec_depend>
+  <exec_depend>message_runtime</exec_depend>
+
+  <build_export_depend>std_msgs</build_export_depend>
+
+
+</package>

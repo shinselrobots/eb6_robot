@@ -1,0 +1,19 @@
+<launch>
+
+  <!-- SIMPLIFIED launch file for EB Robot. No behaviors, to allow debugging hardware -->
+
+   
+
+  <!-- Arduino in EB Body, publishes IMU output -->
+  <!-- WARNING Feather does not have a serial number, so ports mapped by plug location in USB hub! (see udev rules) -->
+  <node pkg="rosserial_python" type="serial_node.py" name="body_node" output="screen">
+    <param name="port" value="/dev/body_arduino"/>
+    <param name="baud" value="57600"/>
+  </node>
+   
+  <!-- Text to speech (robot voice) and sound effects services  -->   
+  <rosparam file="$(find eb)/config/jokes.yaml" command="load"/>
+  <include file="$(find robot_sounds)/launch/robot_sounds.launch"/>
+
+  
+</launch>

@@ -1,0 +1,8 @@
+<launch> 
+
+
+  <!-- launch tensorflow -->
+  <!-- If this does not work, make sure you first: source ~/tensorflow/bin/activate  before running this launch script -->
+  <include file="$(find cob_people_object_detection_tensorflow)/launch/cob_people_object_detection_tensorflow.launch"/>
+
+</launch>

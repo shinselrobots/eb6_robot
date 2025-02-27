@@ -1,0 +1,18 @@
+<launch>
+  <node pkg="google_streaming_speech" type="google_streaming_speech.py" name="google_streaming_speech" output="screen"/>
+
+    <!-- Key Phrase spotting using PicoVoice Porcupine -->
+    <param name="key_phrase_dir" type="string" value="$(find google_streaming_speech)/resources" />
+    <param name="key_phrase_1" type="string" value="Eee-Bee-Six_en_linux_v2_1_0.ppn" />   <!-- Robot Name -->
+    <param name="key_phrase_2" type="string" value="microphone-on_en_linux_v2_1_0.ppn" /> <!--  Command -->
+
+    <param name="hotword_sensitivity" type="double" value="0.50" />    <!-- Larger = more sensitive -->
+    <param name="apply_frontend" type="bool" value="True" />           <!-- NOT USED Keyword front end noise processing? -->
+
+    <!-- if using proxy, configure below and set https_proxy in your .bashrc --> 
+    <param name="proxyUrl" type="string" value="" /> 
+    <!--  <param name="proxyUrl" type="string" value="$(env https_proxy)" /> -->
+ 
+  </launch>
+ 
+

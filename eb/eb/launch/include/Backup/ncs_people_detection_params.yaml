@@ -1,0 +1,18 @@
+# RGB camera image topic, default is for openni2
+# for OpenCV camera:
+#camera_rgb_topic: "/cv_camera/image_raw"
+#camera_rgb_topic: "/camera/rgb/image_rect_color"
+#for Realsense camera:
+camera_rgb_topic: "/camera/color/image_raw"
+
+# Optional depth image topic, default is for openni2
+# WARNING!  If specified, node will not process RGB unless it also receives depth!
+#camera_depth_topic: "/camera/depth_registered/hw_registered/image_rect"
+#for Realsense camera:
+camera_depth_topic: "/camera/aligned_depth_to_color/image_raw"
+
+# Optional video file path for reading from file.  if "no", read from ROS message
+#video_file_path: "no"
+
+show_cv_debug_window: True
+

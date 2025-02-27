@@ -1,0 +1,7 @@
+<launch>
+  <node pkg="ai_chat" type="ai_chat.py" name="ai_chat" output="screen">
+   <rosparam file="$(find ai_chat)/config/intent.yaml" command="load"/>
+  </node>
+
+</launch>
+

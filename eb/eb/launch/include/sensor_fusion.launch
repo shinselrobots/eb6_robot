@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<launch>
+
+  <node name="sensor_fusion" pkg="sensor_fusion" type="sensor_fusion.py" output="screen"> </node>
+  
+</launch>
