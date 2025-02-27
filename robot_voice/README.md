@@ -2,11 +2,24 @@
 
 ## Description:
 ### Provides Text to Speech using:
-- Cepstral(Older) https://www.cepstral.com/
-- Piper TTS (Newer) https://github.com/rhasspy/piper
+- Cepstral(Older)    https://www.cepstral.com/
+- Piper TTS (Newer)  https://github.com/rhasspy/piper
 
 
-## Piper Installation: see piper github
+## Piper Installation:
+Add upgraded Python (for Ubuntu 20.04):
+    python --version
+    sudo apt update
+    sudo apt install software-properties-common
+    sudo add-apt-repository ppa:deadsnakes/ppa
+    sudo apt install python3.9
+    python3.9 --version
+
+Install Piper:
+    python3.9 -m pip install piper-tts
+
+
+
 
 ## (OLD) Cepstral Installation Instructions:
 - Install this package
