@@ -153,7 +153,7 @@ class speechAction(object):
         # Trap any quotes or other bad characters within the string (they mess up the call to swift)
         PERMITTED_CHARS = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ:-_., \n"
         clean_text = "".join(c for c in goal.text_to_speak if c in PERMITTED_CHARS)
-        rospy.loginfo('%s: Clean : [%s]' % (self._action_name, clean_text))
+        #rospy.loginfo('%s: Clean : [%s]' % (self._action_name, clean_text))
 
         if False: # DEBUG TODO REMOVE THIS
             run_command =  "echo 'Hello' | /home/system/sdk/piper/piper --model /home/system/sdk/piper/voices/semaine/en_GB-semaine-medium.onnx -s 3 --output_raw | aplay -f S16_LE -c1 -r22050"

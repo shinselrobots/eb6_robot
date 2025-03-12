@@ -6,40 +6,6 @@
 
 commands:
 
-- description: "Microphone On"
-  required_word_lists:
-  - "microphone on"
-  - "start listening"
-  - "enable microphone"
-  intent: MICROPHONE_ON
-
-- description: "Microphone Off"
-  required_word_lists:
-  - "microphone off"
-  - "stop listening"
-  - "don't listen"
-  intent: MICROPHONE_OFF
-
-- description: "AI Enable"
-  required_word_lists:
-  - "let's chat"
-  - "let's talk"
-  - "hello"
-  - "enable ai"
-  intent: AI_ENABLE
-  
-- description: "AI Enable with response to speak"
-  required_word_lists:
-  - "how are you"
-  intent: AI_ENABLE_WITH_RESPONSE
-  
-- description: "AI Disable"
-  required_word_lists:
-  - "command mode"
-  - "stop talking"
-  - "don't talk"
-  - "don't chat"
-  intent: AI_DISABLE
 
 - description: "Stop command"
   required_word_lists:
@@ -87,11 +53,6 @@ commands:
   intent: TELL_A_JOKE
   param1: "BEST_JOKES"
 
-- description: "Tell time command"
-  required_word_lists:
-  - "what time"
-  intent: TELL_TIME
-
 - description: "bow command"
   required_word_lists:
   - "take a bow"
@@ -101,12 +62,6 @@ commands:
   required_word_lists:
   - "introduce yourself"
   intent: TELL_INTRO
-
-- description: "wave command"
-  required_word_lists:
-  - "wave"
-  - "hello"
-  intent: WAVE
 
 - description: "head center command"
   required_word_lists:
@@ -141,14 +96,6 @@ commands:
   param1: "4"
   param2: 0.3
 
-- description: "stand up command"
-  required_word_lists:
-  - "stand up"
-  - "and up"
-  intent: POSE
-  param1: "3"
-  param2: 0.3
-
 - description: "squat command"
   required_word_lists:
   - "squat"
@@ -158,13 +105,14 @@ commands:
   param1: "DOWN"
   param2: 0.3
 
-- description: "stand mid command"
+- description: "stand up command"
   required_word_lists:
-  - "sit up"
+  - "stand up"
   - "stand"
   intent: POSE
-  param1: "2"
+  param1: "3"
   param2: 0.3
+
 
 - description: "sit down command"
   required_word_lists:
@@ -181,13 +129,6 @@ commands:
   - "look forward"
   intent: HEAD_CENTER
 
-- description: "stretch legs command"
-  required_word_lists:
-  - "test joints"
-  - "test legs"
-  - "stretch legs"
-  intent: STRETCH_LEGS
-
 - description: "Turn right"
   required_word_lists:
   - "turn right"
@@ -203,14 +144,6 @@ commands:
   intent: TURN
   param1: 45.0  # left turn
   param2: 0.5   # speed
-
-- description: "Turn Other"
-  required_word_lists:
-  - "turn right/left"
-  - "turn left/right"
-  param1: -45.0 # right turn by default
-  param2: 0.5   # speed
-
 
 - description: "Spin right"
   required_word_lists:
@@ -244,6 +177,14 @@ commands:
   intent: TURN
   param1: 360.0
   param2: 0.5
+
+- description: "Spin Again"
+  required_word_lists:
+  - "turn again"
+  - "spin again"
+  intent: TURN
+  param1: "AGAIN" # right turn by default
+  param2: 0.5   # speed
   
 
 - description: "Move Short"
@@ -251,6 +192,7 @@ commands:
   - "move forward"
   - "move ford"
   - "move foot"
+  - "move closer"
   - "come closer"
   - "come forward"
   intent: MOVE
@@ -271,7 +213,7 @@ commands:
   - "back up"
   - "backup little"
   intent: MOVE
-  param1: -0.30 # EB has no backup collision sensor yet
+  param1: -0.30 
   param2: 0.4   # speed 0-1.0
 
 - description: "Follow me"

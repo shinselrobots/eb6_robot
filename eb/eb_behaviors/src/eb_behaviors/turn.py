@@ -43,6 +43,8 @@ class TurnBehavior():
         
         self.turn_utils = TurnUtils(self.interrupt_check)
         self.head_control = HeadControl(self.module_name)
+        self.last_turn_amount = 0.0
+        self.last_turn_speed = 0.0
         
         rospy.loginfo("%s: init complete." % (self.module_name))
 
@@ -74,43 +76,61 @@ class TurnBehavior():
         turn_amount = 0.0
         turn_speed = DEFAULT_TURN_SPEED
 
-        try:
-            turn_amount = float(param1)
-        except:
-            rospy.logwarn('%s: Bad value [%s] for Turn Amount. Turn cancelled.' % (self.module_name, param1))
-            self.cleanup()
-            return
-                    
-        if param2 == 'X' or param2 == '':
-            turn_speed = DEFAULT_TURN_SPEED
+        if (param1.lower() == 'again' and 
+            self.last_turn_amount != 0.0 and self.last_turn_speed != 0.0):
+            # repeat the last turn
+            rospy.loginfo('%s: Repeat Last Turn: Amount =  %02.2f Speed = %02.2f.' % 
+                (self.module_name, self.last_turn_amount, self.last_turn_speed))
+            turn_amount = self.last_turn_amount
+            turn_speed = self.last_turn_speed
+            
         else:
             try:
-                turn_speed = fabs(float(param2))
+                turn_amount = float(param1)
             except:
-                rospy.logwarn('%s: Bad value [%s] for Turn Speed. Using DEFAULT_TURN_SPEED' % (self.module_name, param2))
+                rospy.logwarn('%s: Bad value [%s] for Turn Amount. Turn cancelled.' % (self.module_name, param1))
+                self.cleanup()
+                return
+                        
+            if param2 == 'X' or param2 == '':
+                turn_speed = DEFAULT_TURN_SPEED
+            else:
+                try:
+                    turn_speed = fabs(float(param2))
+                except:
+                    rospy.logwarn('%s: Bad value [%s] for Turn Speed. Using DEFAULT_TURN_SPEED' % (self.module_name, param2))
 
 
+        # Save incase user asks the robot to "turn again" later
+        self.last_turn_amount = turn_amount
+        self.last_turn_speed = turn_speed
+        
         # Begin turning
         status_ok = self.turn_utils.begin_turn(turn_amount, turn_speed)
         if not status_ok: 
             return # problem beginning the turn
 
-        print("TURNING HEAD")
-        # while the body is turning, turn head opposite to keep pointing about where it was
+        # HEAD PAN
+        # While the body is turning, turn head opposite to keep pointing about where it was
+        rospy.loginfo('%s: Turning Head.' % self.module_name)
+ 
         # Get the current servo pan and tilt position, already normalized to neck position        
         (current_sidetilt, current_pan, current_tilt, current_neck) = self.head_control.get_head_servo_positions()
 
         # Pan the head
-        pan_angle = math.radians(-turn_amount) # opposite of turn, in radians
+        pan_angle = current_pan - math.radians(turn_amount) # opposite of turn, in radians
+        if math.fabs(turn_amount) > 60.0:
+            pan_angle = 0.0 # Just look forward on big turns
+
         self.head_control.head_pan_move(pan_angle)
 
         # Compensate for Pan and Tilt to level the sidetilt
         sidetilt_angle = pan_angle * current_tilt * -1
         #smooth_sidetilt_angle = (.5 * current_sidetilt) + (.5 * sidetilt_angle)            
-        
         self.head_control.head_sidetilt_move(sidetilt_angle)     # Send servo command
         
-        
+
+        # Let's Turn!        
         while not rospy.is_shutdown():
             
             if self.interrupt_check():

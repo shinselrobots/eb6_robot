@@ -109,7 +109,7 @@ class BehaviorUtils():
     def speak(self, text_to_speak, wait_for_result = True):
         if self.speech_client:
             speech_goal = robot_voice.msg.speechGoal(text_to_speak)
-            rospy.loginfo("Speaking...[%s]" % (text_to_speak))
+            rospy.loginfo("Behavior Server: Speaking...[%s]" % (text_to_speak))
             self.speech_client.send_goal(speech_goal)
             if wait_for_result:
                 result = self.speech_client.wait_for_result() # wait for speech to complete

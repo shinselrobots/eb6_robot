@@ -40,7 +40,7 @@ class SensorFusion():
         # EB is 260mm wide. We pad 50mm on each side to avoid collisions.
         self.robot_width = rospy.get_param("~robot_collision_width", 0.360) 
         self.half_robot_width = self.robot_width / 2
-        self.depth_camera_max_range = 1.5 # Camera can actually do > 4.0, but we only care closer than this
+        self.depth_camera_max_range = 2.0 # Camera can actually do > 4.0, but we only care closer than this
         self.avoid_range = rospy.get_param("~object_avoidance_range", 1.20) # 1.20
         self.max_laser_max_range = rospy.get_param("~laser_max_range", 2.00)
         self.ir_max_range = 0.600 # When nothing in view, reports .62 or more
@@ -172,11 +172,11 @@ class SensorFusion():
     def laser_callback(self, data):
     
         
-        frame = np.zeros((400, 440,3), np.uint8)
+        frame = np.zeros((450, 450,3), np.uint8)
         angle_increment = data.angle_increment
         angle = data.angle_min
-        base_cv_x = 220
-        base_cv_y = 235  # from top of frame
+        base_cv_x = 225
+        base_cv_y = 320  # from top of frame
         self.laser_frame_received = True
 
         # Create the CV window on first frame, so we can put it where we want it, but still drag
@@ -303,10 +303,13 @@ class SensorFusion():
                 #cv2.line(frame, (base_cv_x, base_cv_y), (draw_x+base_cv_x,draw_y+base_cv_y), (255,0,0), 2)
                 
                 if object_ahead:
-                  cv2.line(frame, (draw_x+base_cv_x,draw_y+base_cv_y), (draw_x+base_cv_x,draw_y+252), (0,100,255), 2)
+                    cv2.line(frame, (draw_x+base_cv_x,draw_y+base_cv_y), (draw_x+base_cv_x,draw_y+252), (0,100,255), 2)
                 
                 elif object_on_side:
-                  cv2.line(frame, (draw_x+base_cv_x,draw_y+base_cv_y), (draw_x+base_cv_x,draw_y+252), (0,255,255), 2)
+                    cv2.line(frame, (draw_x+base_cv_x,draw_y+base_cv_y), (draw_x+base_cv_x,draw_y+252), (0,255,255), 2)
+
+                elif y >= self.avoid_range and r < self.depth_camera_max_range - 1:
+                    cv2.line(frame, (draw_x+base_cv_x,draw_y+base_cv_y), (draw_x+base_cv_x,draw_y+252), (255, 0, 0), 2)
             
             angle= angle + data.angle_increment 
             i = i+1

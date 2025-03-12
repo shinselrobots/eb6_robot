@@ -274,7 +274,7 @@ class SysMonGui():
 
         item_str = status_msg.item
         status_str = status_msg.status
-        rospy.loginfo("%s: Got Status update [%s] [%s]" % (self.module_name, item_str, status_str))            
+        # rospy.loginfo("%s: Got Status update [%s] [%s]" % (self.module_name, item_str, status_str))            
 
 
         # SPECIAL CASES
@@ -297,7 +297,7 @@ class SysMonGui():
 
 
         elif item_str == 'SPEECH_RECO_STATE': # speech recognition server state
-            print("********************* SPEECH_RECO_STATE *****************")
+            #print("********************* SPEECH_RECO_STATE *****************")
             self.speech_reco_state = status_str 
             
             # Special LED case for keyword in sleep mode

@@ -118,6 +118,7 @@ class WheelControl():
         self.object_front_status = ''
         self.object_rear_status = ''
         self.status_update_counter = 0
+        self.sensor_summary = None                              
                               
         self.programmed_move = ProgrammedMove(self.collision_slow_distance, 
             self.collision_stop_distance_front, self.collision_stop_distance_rear)
@@ -241,12 +242,16 @@ class WheelControl():
 
         return_speed = requested_speed    
 
-        if not self.collision_prevention_enabled:
-            rospy.loginfo("%s:collision_override: collision_prevention disabled." % (self.module_name))
-            return return_speed
-
         if requested_speed == 0.0:
             # don't do anything if the robot is stopped with no command to move
+            return return_speed
+
+        if self.sensor_summary == None:
+            rospy.loginfo("%s:collision_override: No Sensor_summary data received!" % (self.module_name))
+            return return_speed
+
+        if not self.collision_prevention_enabled:
+            rospy.loginfo("%s:collision_override: collision_prevention disabled." % (self.module_name))
             return return_speed
 
 
@@ -349,7 +354,7 @@ class WheelControl():
 
     def twist_cb(self, msg):
         # Accept move commands from other modules. Joystick can override.
-        rospy.loginfo("%s: Received twist /cmd_vel: speed: %2.2f, turn: %2.2f" % (self.module_name, msg.linear.x, msg.angular.z))
+        #rospy.loginfo("%s: Received twist /cmd_vel: speed: %2.2f, turn: %2.2f" % (self.module_name, msg.linear.x, msg.angular.z))
         #rospy.loginfo("Linear Components: [%f, %f, %f]"%(msg.linear.x, msg.linear.y, msg.linear.z))
         #rospy.loginfo("Angular Components: [%f, %f, %f]"%(msg.angular.x, msg.angular.y, msg.angular.z))
 
@@ -685,10 +690,10 @@ class WheelControl():
                 if elapsed_time > COMMAND_TIMEOUT_SECONDS:
                     # Timer has expired without a new command. Stop the wheels.
                     # Programmed move will override this, that's ok.
-                    rospy.loginfo("*********************************************")
-                    rospy.loginfo(" Joystick or command timeout.")
-                    rospy.loginfo(" Stopping unless overridden by programmed move")
-                    rospy.loginfo("*********************************************")
+                    # rospy.loginfo("*********************************************")
+                    # rospy.loginfo(" Joystick or command timeout.")
+                    # rospy.loginfo(" Stopping unless overridden by programmed move")
+                    # rospy.loginfo("*********************************************")
                     self.command_timeout_start = None
                     self.speed_cmd = 0.0
                     self.turn_cmd = 0.0

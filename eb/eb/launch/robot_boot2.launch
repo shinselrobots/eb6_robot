@@ -1,15 +1,16 @@
+<?xml version="1.0"?>
 <launch>
 
   <!-- STAGE 2 OF LAUNCH for EB Robot when launched from Bluetooth phone. 
        Does not launch Arduino nodes, as they are launched automatically at boot.
   -->
 
-  <!-- Set GLOBAL parameters that control the demo behaviors -->
+   <!-- Set GLOBAL parameters that control the demo and debug behaviors -->
   <param name="/Idle_behavior/enable_people_tracking" type="bool" value="True" />
   <param name="/Idle_behavior/enable_random_movement" type="bool" value="True" />
   <param name="/Idle_behavior/use_ai" type="bool" value="True" />
 
-
+    
   <!-- Dynamixel Servo Controllers, using modified dynamixel_motor module -->
   <include file="$(find eb_servos)/launch/servos.launch"/>
   
@@ -23,15 +24,17 @@
   <!-- Streaming Speech Recognition and Keyword detector (for Wake) -->
   <include file="$(find streaming_recognition)/launch/streaming_recognition.launch"/>
 
-  <!-- Face Detector (and recognizer). Finds faces and looks for matches from face database -->
+  <!-- Face Detector. Finds faces to track -->
   <include file="$(find face_detector)/launch/face_detector.launch"/>
+
+  <!-- Face Recognizer. Looks for matches from face database -->
+  <include file="$(find face_recognizer)/launch/face_recognizer.launch"/>
 
   <!-- EB Face Tracker. Tracks faces and does random movements when idle. -->
   <include file="$(find eb_face_tracker)/launch/eb_face_tracker.launch"/>
 
   <!-- AI Chat State machine for conversing with people and invoking behaviors -->
   <include file="$(find ai_chat)/launch/ai_chat.launch"/>
-
 
 
   <!-- Behavior command handler. Parameters are one of: NOTHING, WAKE, IDLE  -->
@@ -41,8 +44,8 @@
   </node>
 
   <!-- Dashboards for system monitoring and control -->
-  <include file="$(find eb_sysmon)/launch/eb_sysmon.launch"/>
   <include file="$(find eb_servos)/launch/dashboard.launch"/>
+  <include file="$(find eb_sysmon)/launch/eb_sysmon.launch"/>
 
   
   <!-- CAMERA OPTIONS -->

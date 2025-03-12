@@ -164,7 +164,7 @@ class FaceDetectorNode(object):
 
         # TODO Output Topics - set publisher topics here
         #body_tracker_topic =        '/body_tracker/position'
-        body_tracker_array_topic =  '/body_tracker_array/people'
+        body_tracker_array_topic =  '/body_tracker_array/face'
         image_publisher_topic =     '/body_tracker_array/image' # send image synchronized with data
 
  
@@ -345,23 +345,28 @@ class FaceDetectorNode(object):
         body_tracker_msg.gesture = -1 # no gesture
         body_tracker_msg.face_found = True
 
-        body_tracker_msg.face_left = bb_left
-        body_tracker_msg.face_top = bb_top
-        body_tracker_msg.face_width = bb_width
-        body_tracker_msg.face_height = bb_height
+        body_tracker_msg.bb_left = bb_left
+        body_tracker_msg.bb_top = bb_top
+        body_tracker_msg.bb_width = bb_width
+        body_tracker_msg.bb_height = bb_height
         body_tracker_msg.name = name
         body_tracker_gender = gender
         body_tracker_msg.age = age
 
         # face angle x,y from CAMERA center (radians), z = range (meters from camera) 
-        body_tracker_msg.camera_to_face_polar.x = scaled_target_radians_x
-        body_tracker_msg.camera_to_face_polar.y = scaled_target_radians_y
-        body_tracker_msg.camera_to_face_polar.z = target_range_z
+        body_tracker_msg.camera_to_target_polar.x = scaled_target_radians_x
+        body_tracker_msg.camera_to_target_polar.y = scaled_target_radians_y
+        body_tracker_msg.camera_to_target_polar.z = target_range_z
  
         # face angle x,y from ROBOT center front (radians), z = range (meters from camera)
-        body_tracker_msg.base_to_face_polar.x = base_target_angle_x
-        body_tracker_msg.base_to_face_polar.y = base_target_angle_y
-        body_tracker_msg.base_to_face_polar.z = target_range_z
+        body_tracker_msg.base_to_target_polar.x = base_target_angle_x
+        body_tracker_msg.base_to_target_polar.y = base_target_angle_y
+        body_tracker_msg.base_to_target_polar.z = target_range_z
+
+        #body center x,y in camera frame, z = range from camera
+        body_tracker_msg.position2d.x = 0.0 
+        body_tracker_msg.position2d.y = 0.0 
+        body_tracker_msg.position2d.z = 0.0 
         
         body_tracker_msg.position3d.x = 0.0 # Point cloud in cartesian coordinates
         body_tracker_msg.position3d.y = 0.0
@@ -488,7 +493,7 @@ class FaceDetectorNode(object):
 
                 if self.show_cv_debug_window:
                     # draw bounding box around the face
-                    cv2.rectangle(self.cv_image, (bb_left, bb_top), (bb_right, bb_bottom), (0, 255, 0), 2)
+                    cv2.rectangle(self.cv_image, (bb_left, bb_top), (bb_right, bb_bottom), (0, 255, 0), 4)
 
                 # smooth out the target movement
                 undershoot_scale = 0.5
@@ -513,7 +518,7 @@ class FaceDetectorNode(object):
                 scaled_target_radians_x = ((self.smooth_target_x / float(image_width)) - 0.5) * FOV_X * -1.0
                 scaled_target_radians_y = ((self.smooth_target_y / float(image_height)) - 0.5) * FOV_Y
 
-                camera_x_offset_radians = radians(-9.0)  # degrees. right eye camera is offset from center of face. Compensate here
+                camera_x_offset_radians = radians(-4.0)  # degrees. right eye camera is offset from center of face. Compensate here
                 scaled_target_radians_x = scaled_target_radians_x + camera_x_offset_radians
                 # DEBUG rospy.loginfo( "%s: DBG: *** Target angle from face center: x = %2.1f, y = %2.1f degrees" 
                 # DEBUG    % (self.node_name, (scaled_target_radians_x * 57.2958), (scaled_target_radians_y * 57.2958) ))

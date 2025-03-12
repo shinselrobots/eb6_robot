@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+
+<launch>
+  
+  <!-- launch detector only. Assumes exclusive camera access to this node (see yaml file) -->
+  <node name="yolo_body_tracker" pkg="yolo_body_tracker" type="yolo_body_tracker.py" required="true" output="screen">
+
+    <!-- load params from Yaml -->
+    <rosparam command="load" file="$(find yolo_body_tracker)/launch/yolo_body_tracker_params.yaml"/>
+
+  </node>
+
+
+
+</launch>

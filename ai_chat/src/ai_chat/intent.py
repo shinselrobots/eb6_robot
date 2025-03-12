@@ -18,12 +18,13 @@ from behavior_msgs.msg import CommandState
 
 
 # For DEBUGGING from the command line
+DEBUG_DISPLAY_YAML = False
 DEBUG_LOAD_LOCAL_YAML = False
 DEBUG_YAML_PATH = '../../config/intent.yaml'
 
 
 class CommandIntent():
-    def __init__(self):
+    def __init__(self, local_yaml=False):
         ##rospy.init_node('command_intent')
         self.logname = 'AI Command Intent: '
         rospy.loginfo(self.logname + "initializing...")
@@ -33,7 +34,7 @@ class CommandIntent():
         self.commandDict = None
         rospy.loginfo(self.logname + "Opening YAML Config file.")
         
-        if DEBUG_LOAD_LOCAL_YAML:
+        if DEBUG_LOAD_LOCAL_YAML or local_yaml:
             # For debug only, allows running from command line without launch file
             print("DEBUG: Loading local YAML")
             # If this fails, it will throw an exception, killing the process immediately (which we want)
@@ -47,9 +48,10 @@ class CommandIntent():
 
 
             
-        # DEBUG Print the yaml values as a dictionary
-        print(self.commandDict)
-        print()
+        if DEBUG_DISPLAY_YAML:
+            # DEBUG Print the yaml values as a dictionary
+            print(self.commandDict)
+            print()
 
         ## self.fake_name = 'none'
         self.last_name = ''

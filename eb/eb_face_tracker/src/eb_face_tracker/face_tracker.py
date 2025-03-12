@@ -40,15 +40,22 @@ from geometry_msgs.msg import PointStamped, Point, PoseStamped, Pose, Pose2D
 
 SERVO_SPEED = 0.35
 
+class BoundingBox():
+    def __init__(self, left, top, width, height):
+        self.bb_left =   left
+        self.bb_top =    top
+        self.bb_width =  width
+        self.bb_height = height
+
 
 class FaceTracker():
 
     def __init__(self):
         rospy.init_node('face_tracker')
-        self.module_name = 'face_tracker'
-        rospy.loginfo('%s: Initializing...' % (self.module_name))
+        self.log_name = 'face_tracker'
+        rospy.loginfo('%s: Initializing...' % (self.log_name))
 
-        self.head_control = HeadControl(self.module_name)
+        self.head_control = HeadControl(self.log_name)
         
         # CONSTANTS
         self.TILT_CENTER = 0.25 # 0.15    #  lean toward up in random movements (since robot is on the ground)
@@ -67,6 +74,7 @@ class FaceTracker():
         self.SPEECH_RECO_IDLE = 2
         
         self.NAME_TIMEOUT_SECS = 10.0
+        self.FACE_INSIDE_BODY_BB_TIMEOUT_SEC = 2.0
 
 
         self.DEADBAND_ANGLE = 0.1 # DEBUG
@@ -79,8 +87,10 @@ class FaceTracker():
         ##self.ai_mode_active = False
         self.tracking = False
         self.tracking_received = False
-        self.enable_people_tracking = False # TODO False # start with movement off, until enabled
-        self.enable_random_movement = False
+        self.enable_people_tracking = True # TODO False # start with movement off, until enabled
+        self.enable_random_movement = True
+        self.require_body_tracking = False
+        self.body_list = []
         self.antenna_center = self.ANTENNA_NOT_LISTENING
         self.tracking = False
         #self.joint_state = JointState() # for reading servo positions
@@ -91,6 +101,9 @@ class FaceTracker():
         self.named_person = ""
         ##self.named_person_id = 0
         self.named_person_time = rospy.Time.now() # start timer
+        self.face_inside_body_bb = False
+        self.face_inside_body_bb_time = rospy.Time.now() # start timer
+        
         self.named_people_seen_today = {}
         self.reco_listen_state = self.SPEECH_RECO_IDLE
         self.speech_reco_state = ''
@@ -130,12 +143,18 @@ class FaceTracker():
         face_reco_sub = rospy.Subscriber("/body_tracker_array/center_face_name", \
             String, self.face_recognition_callback, queue_size=1)
         
-        # Messages from face detector for face tracking
-        position_sub = rospy.Subscriber("/body_tracker_array/people", \
-            BodyTrackerArray, self.position_callback, queue_size=1)
+        # Message from face detector for face tracking
+        face_sub = rospy.Subscriber("/body_tracker_array/face", \
+            BodyTrackerArray, self.face_callback, queue_size=1)
 
-        #position_sub = rospy.Subscriber("/body_tracker_array/people", \
-        #    BodyTrackerArray, self.position_callback, queue_size = 1, buff_size = (256*10) ) 
+        # Message from body detector for body tracking
+        body_sub = rospy.Subscriber("/body_tracker_array/body", \
+            BodyTrackerArray, self.body_callback, queue_size=1)
+
+
+        # Message Buffer example (if needed in future):
+        #face_sub = rospy.Subscriber("/body_tracker_array/face", \
+        #    BodyTrackerArray, self.face_callback, queue_size = 1, buff_size = (256*10) ) 
         # room for about 10 messages, so they don't back up
 
  
@@ -146,7 +165,7 @@ class FaceTracker():
 
         self.send_status_update("FACE_TRACKER", "WAIT_FOR_FACE")
 
-        rospy.loginfo("%s: init complete." % (self.module_name))
+        rospy.loginfo("%s: init complete." % (self.log_name))
         #====================================================================
 
     ##def ai_mode_enabled_callback(self, data):
@@ -177,7 +196,7 @@ class FaceTracker():
 
         item_str = status_msg.item
         status_str = status_msg.status
-        #rospy.loginfo("%s: Got Status update [%s] [%s]" % (self.module_name, item_str, status_str))            
+        #rospy.loginfo("%s: Got Status update [%s] [%s]" % (self.log_name, item_str, status_str))            
         
 
         if item_str == 'SPEECH_RECO_STATE': # speech recognition server state
@@ -198,8 +217,8 @@ class FaceTracker():
     def face_recognition_callback(self, msg):
         # Message with name of person recognized
         # Name stays until timed out or tracking disabled
-        rospy.loginfo("%s: Got User Name: [%s]" % (self.module_name, msg.data))
         if msg.data != '':
+            rospy.loginfo("%s: Got User Name: [%s]" % (self.log_name, msg.data))
             self.named_person = msg.data
             self.named_person_time = rospy.Time.now()
             self.pub_current_user_name.publish(self.named_person)
@@ -209,7 +228,7 @@ class FaceTracker():
     def face_tracking_enabled_callback(self, data):
         self.enable_people_tracking = data.data
         if self.enable_people_tracking:
-            rospy.loginfo("%s: Face Tracking ENABLED" % (self.module_name))
+            rospy.loginfo("%s: Face Tracking ENABLED" % (self.log_name))
             self.set_head_servo_speeds()
             # Position head camera for face tracking
             
@@ -220,7 +239,7 @@ class FaceTracker():
             self.head_control.antenna_move(self.antenna_center, "both")
             
         else:
-            rospy.loginfo("%s: Face Tracking DISABLED" % (self.module_name))
+            rospy.loginfo("%s: Face Tracking DISABLED" % (self.log_name))
             self.named_person = ''
             self.pub_current_user_name.publish(self.named_person)
 
@@ -228,10 +247,10 @@ class FaceTracker():
     def random_move_enabled_callback(self, data):   
         self.enable_random_movement = data.data
         if self.enable_random_movement:
-            rospy.loginfo("%s: Random Movement ENABLED" % (self.module_name))
+            rospy.loginfo("%s: Random Movement ENABLED" % (self.log_name))
             self.set_head_servo_speeds()
         else:
-            rospy.loginfo("%s: Random Movement DISABLED" % (self.module_name))
+            rospy.loginfo("%s: Random Movement DISABLED" % (self.log_name))
 
 
     def send_status_update(self, item, status):
@@ -258,7 +277,7 @@ class FaceTracker():
         # multiple samples taken and closest valid sample used for range            
 
         if self.laser_data is None:
-            rospy.logwarn("%s: No Laser data yet..." % (self.module_name))
+            rospy.logwarn("%s: No Laser data yet..." % (self.log_name))
             return self.max_laser_max_range
             
 
@@ -299,29 +318,57 @@ class FaceTracker():
 
         return(range_value)
     
+
+
+    #====================================================================
+    # 2D Body Tracking:  Message contains body bounding box and other info
+    #                    position is relative to the robot head camera.  
+    def body_callback(self, msg):
+    
+        if not self.require_body_tracking:
+            return    
+    
+        # print("------------------------------")
+        #rospy.loginfo('%s: got body_callback message' % (self.log_name))
+        #print(msg)
+
+        self.body_list = []
+        
+        for i, person in enumerate(msg.detected_list):
+            # print("DBG:face_tracker: enum loop = ", i)
+
+            # create a list of bounding boxes where people are seen
+            # face detector will compare to this to assure a real face
+            
+            body = BoundingBox(                
+                person.bb_left, person.bb_top, person.bb_width, person.bb_height)
+
+            self.body_list.append(body)               
+
+
     
     #====================================================================
-    # 2D Tracking:  Message contains person horizontal (x) and vertical (y)
-    #               position is relative to the robot head.  
-    def position_callback(self, msg):
+    # 2D Face Tracking:  Message contains face horizontal (x) and vertical (y)
+    #               position relative to the robot head camera.  
+    def face_callback(self, msg):
         # Note: we don't use person name in this message, because all people seen are listed.
         # Instead, we use the center person sent in a separate message
     
         # print("------------------------------")
-        #rospy.loginfo('%s: got position_callback message' % (self.module_name))
+        #rospy.loginfo('%s: got face_callback message' % (self.log_name))
         #print(msg)
 
         # Calculate Time between frames
         dt=time.time()-self.timeStamp
         self.timeStamp=time.time()
         #print()
-        #print("DBG:face_tracker:           Time since last frame = %4.3f" % dt)
+        #print("DBG:face_tracker:           Time since last face frame = %4.3f" % dt)
 
 
 
         #if self.servos_are_moving():
             # to prevent oscillations, wait until the servo stops to get next frame
-            #rospy.loginfo('%s: SERVOS ARE MOVING. SKIPPING FRAME' % (self.module_name))
+            #rospy.loginfo('%s: SERVOS ARE MOVING. SKIPPING FRAME' % (self.log_name))
             #return
             
         # determine highest priority person to track
@@ -350,36 +397,73 @@ class FaceTracker():
             #print(msg.detected_list)
             for i, person in enumerate(msg.detected_list):
                 # print("DBG:face_tracker: enum loop = ", i)
-                
-                # find person distance from body radar
-                laser_distance = self.find_laser_distance(person.base_to_face_polar.x)
-                #print("DBG: face_tracker: Est.  Distance for person [%d] = %6.4f" % (i, person.camera_to_face_polar.z))
-                #print("DBG: face_tracker: Laser Distance for person [%d] = %2.4f" % (i, laser_distance))
-                
-                if person.camera_to_face_polar.z < closest_person_distance:
-                    closest_person_distance = person.camera_to_face_polar.z
-                    # print("DBG:face_tracker: Tracking closest person. Distance = %2.4f" % closest_person_distance)
-                    person_to_track_id = person.body_id
-                    person_to_track_index = i
+ 
+                # Compare face location with body tracker to assure it's a real face
+                # the face tracker sometimes triggers on random patterns, 
+                # the body tracker is more robust, but updates slowly
+                if self.require_body_tracking:
+                    #print("DBG: Person ID = ", person.body_id)
+                    #print("DBG: Person DUMP: ", person)
+
+                    
+                    for body in self.body_list:
+
+                        body_right =  body.bb_left + body.bb_width
+                        face_right =  person.bb_left + person.bb_width
+                        
+                        #print("DBG: Body BB Left: %d, Right: %d, Top: %d, Width: %d, Height: %d" % 
+                        #    (body.bb_left, body_right, body.bb_top, body.bb_width, body.bb_height))
+                        #print("DBG: Face BB Left: %d, Right: %d" % (person.bb_left, face_right))
+
+                        if (person.bb_left > body.bb_left) and (face_right < body_right):
+                            self.face_inside_body_bb = True
+                            self.face_inside_body_bb_time = rospy.Time.now() # start timer
+                            
+                            print("*******************************************************")
+                            rospy.loginfo("%s:  FOUND FACE (%d) INSIDE A BODY_BB" % 
+                                (self.log_name, person.body_id))
+                            print("*******************************************************")
+                        #else:
+                        #    print("DBG: Face not inside body bb")
+
+
+                if self.face_inside_body_bb or not self.require_body_tracking:
+
+                    # find person distance from body radar
+                    laser_distance = self.find_laser_distance(person.base_to_target_polar.x)
+                    print("DBG: face_tracker: Est.  Distance for person [%d] = %6.4f" % (i, person.camera_to_target_polar.z))
+                    print("DBG: face_tracker: Laser Distance for person [%d] = %2.4f" % (i, laser_distance))
+                    
+                    if person.camera_to_target_polar.z < closest_person_distance:
+                        closest_person_distance = person.camera_to_target_polar.z # TODO BUG should be Laser distance!?
+                        # print("DBG:face_tracker: Tracking closest person. Distance = %2.4f" % closest_person_distance)
+                        person_to_track_id = person.body_id
+                        person_to_track_index = i
+
+                elif self.require_body_tracking:
+                    rospy.logwarn("%s: FACE [%d] IS NOT INSIDE BODY BB, SKIPPING FACE" % 
+                        (self.log_name, person.body_id))
+ 
+
 
         # print("DBG:face_tracker: person_to_track_id = ", person_to_track_id)
         if person_to_track_id != 0:
 
             # found someone to track
-            person_info = msg.detected_list[person_to_track_index]
-            # if person_info.face_found == True:
-                # rospy.loginfo("%s: Face Found.  Name = %s" % (self.module_name, person_info.name))
+            face_info = msg.detected_list[person_to_track_index]
+            # if face_info.face_found == True:
+                # rospy.loginfo("%s: Face Found.  Name = %s" % (self.log_name, face_info.name))
 
             # Track person. position in radians from center of camera
-            delta_angle_x = person_info.camera_to_face_polar.x # * (-1.0) 
-            delta_angle_y = person_info.camera_to_face_polar.y  
-            #person_tracking_distance = msg.camera_to_face_polar.z
+            delta_angle_x = face_info.camera_to_target_polar.x # * (-1.0) 
+            delta_angle_y = face_info.camera_to_target_polar.y  
+            #person_tracking_distance = msg.camera_to_target_polar.z
 
             # Uncomment this to debug
             # print('Delta X: %1.4f Y: %1.4f' % (delta_angle_x, delta_angle_y) )
             
             #rospy.loginfo("%s: Tracking Person Index: %d, ID: %d x: %f y: %f", \
-            #    self.module_name, person_to_track_index, person_to_track_id, delta_angle_x, delta_angle_y ) 
+            #    self.log_name, person_to_track_index, person_to_track_id, delta_angle_x, delta_angle_y ) 
 
 
             # Get the current servo pan and tilt position, already normalized to neck position        
@@ -398,16 +482,16 @@ class FaceTracker():
                 # Tracking movement allowed
 
                 # Actual position (from base front-center)
-                base_target_x =  person_info.base_to_face_polar.x
+                base_target_x =  face_info.base_to_target_polar.x
 
                 # add target position to current servo position
                 undershoot_scale = 0.30 # percent of target distance to move
                 pan_angle  = current_pan  + (delta_angle_x * undershoot_scale) #shoot for less
                 tilt_angle = current_tilt + (delta_angle_y * undershoot_scale)
                 #rospy.loginfo("%s: Before Clamp: Servo Command:  Pan = %f,  Tilt = %f", 
-                #    self.module_name, pan_angle, tilt_angle)
+                #    self.log_name, pan_angle, tilt_angle)
 
-                #rospy.loginfo("%s:DBG: Pan Delta: %4.2f" % (self.module_name, degrees(delta_angle_x)) ) 
+                #rospy.loginfo("%s:DBG: Pan Delta: %4.2f" % (self.log_name, degrees(delta_angle_x)) ) 
 
                 # command servos to move to target, if not in deadband
                 pan_on_target = True
@@ -417,7 +501,7 @@ class FaceTracker():
                 if abs(delta_angle_x) > self.DEADBAND_ANGLE:
                     pan_on_target = False
                     self.head_control.head_pan_move(pan_angle)    # Send servo command
-                    #rospy.loginfo("%s:DBG: MOVING PAN SERVO" % self.module_name) 
+                    #rospy.loginfo("%s:DBG: MOVING PAN SERVO" % self.log_name) 
                 else:
                     pan_on_target = True
                     pan_angle  = current_pan         # prevent oscillations of sidetilt
@@ -444,10 +528,10 @@ class FaceTracker():
                 
                 #if pan_on_target and tilt_on_target:
                 #    print('DBG:face_tracker: X and Y in Deadband')
-                #    # rospy.loginfo("%s: On target ID %d", self.module_name, self.named_person_id)
+                #    # rospy.loginfo("%s: On target ID %d", self.log_name, self.named_person_id)
                 #else: 
                 #   rospy.loginfo("%s: ID %d: Pan delta = %f, Tilt Delta = %f", 
-                #     self.module_name, self.named_person_id, delta_angle_x, delta_angle_y) 
+                #     self.log_name, self.named_person_id, delta_angle_x, delta_angle_y) 
 
                 # Max pan/tilt is constrained by system.  Add additional constraints if needed
 
@@ -465,20 +549,20 @@ class FaceTracker():
 
     #====================================================================
     def run(self):
-        rospy.loginfo('%s: Running' % (self.module_name))
+        rospy.loginfo('%s: Running' % (self.log_name))
 
         
         if self.enable_random_movement:
-            rospy.loginfo('%s: random head movements enabled...' % (self.module_name))
+            rospy.loginfo('%s: random head movements enabled...' % (self.log_name))
         else:
-            rospy.loginfo('%s: random head movements DISABLED' % (self.module_name))
+            rospy.loginfo('%s: random head movements DISABLED' % (self.log_name))
 
         if self.enable_people_tracking:
-            rospy.loginfo('%s: waiting for person tracking...' % (self.module_name))
+            rospy.loginfo('%s: waiting for person tracking...' % (self.log_name))
         else:
-            rospy.loginfo('%s: person tracking DISABLED' % (self.module_name))
+            rospy.loginfo('%s: person tracking DISABLED' % (self.log_name))
 
-        rospy.loginfo('%s: main loop starting' % (self.module_name))
+        rospy.loginfo('%s: main loop starting' % (self.log_name))
 
         #tracking_score = 0
         #not_tracking_score = 0
@@ -490,11 +574,20 @@ class FaceTracker():
             #if current_neck > -0.95:
             # Only move if robot is not in sleep position? (should be overkill - handled elsewhere?)
 
+            # Body bounding box updates slow, so we allow time for it to catch up with face position
+            # see if it has timed out
+            if self.face_inside_body_bb:
+                body_bb_elapsed_time = rospy.Time.now() - self.face_inside_body_bb_time 
+                if body_bb_elapsed_time > rospy.Duration.from_sec(self.FACE_INSIDE_BODY_BB_TIMEOUT_SEC):
+                    self.face_inside_body_bb = False
+
+
 
             # Check to see if person's name has timed out
             time_since_last_name = rospy.Time.now() - self.named_person_time 
             if time_since_last_name > rospy.Duration.from_sec(self.NAME_TIMEOUT_SECS):
-                rospy.loginfo("%s: User Name [%s] Timed out", self.module_name, self.named_person)
+                if self.named_person != '':
+                    rospy.loginfo("%s: User Name [%s] Timed out", self.log_name, self.named_person)
                 self.named_person = "" 
                 self.pub_current_user_name.publish(self.named_person)
 
@@ -526,7 +619,7 @@ class FaceTracker():
 
             if not self.tracking and self.enable_random_movement:   
                 # Idle: Move head to constrained random location, at random intervals
-                #rospy.loginfo('%s: Doing Random Movement' % (self.module_name))
+                #rospy.loginfo('%s: Doing Random Movement' % (self.log_name))
                 
                 tiltAmt = self.TILT_CENTER + random.uniform(-0.3, 0.3)  # Normal: +/- 0.3
                 self.head_control.head_tilt_move(tiltAmt)

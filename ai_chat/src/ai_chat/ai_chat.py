@@ -389,6 +389,9 @@ class AiChat():
             rospy.loginfo("%s: AI RESPONSE: %s" % (self.logname, self.ai_response))
             rospy.loginfo("%s: ================================================" % (self.logname))
 
+            self.append_conversation({"role": "assistant", "content": self.ai_response})
+
+
             # See if the AI found any commands. (AI embeds them between square brackets)
             cmd_string = ''
             speak_string = ''
@@ -396,7 +399,6 @@ class AiChat():
 
             if cmd_string == '':            
                 self.speak(self.ai_response)
-                self.append_conversation({"role": "assistant", "content": self.ai_response})
                 ##self.last_ai_response = self.ai_response # in case we want to repeat ourself
 
                 
@@ -405,8 +407,6 @@ class AiChat():
                 # Speak the non-command part from the AI immediately
                 self.speak(speak_string)
                 ## self.last_ai_response = '' # responses with commands are not suitable to repeat
-                self.append_conversation({"role": "assistant", "content": speak_string})
-
                 # Now, send the command to the intent handler
                 # if valid command, the parser will send it to the behavior server and return True
                 rospy.loginfo("%s: AI thinks it found a Command... Sending to Intent Parser..." % (self.logname))
@@ -433,7 +433,7 @@ class AiChat():
 
             if self.state != self.last_state:
                 rospy.loginfo("%s: Current State: %s" % (self.logname, self.state))
-                self.last_state == self.state
+                self.last_state = self.state
 
             if self.state == State.Disabled:
                 self.speak_any_system_status()

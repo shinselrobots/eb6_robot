@@ -139,8 +139,8 @@ class FaceRecognitionNode(object):
 
         for index, person in enumerate(msg_in.detected_list):
             if person.face_found:
-                face_center_x = person.face_left + person.face_width / 2
-                face_center_y = person.face_top + person.face_height / 2
+                face_center_x = person.bb_left + person.bb_width / 2
+                face_center_y = person.bb_top + person.bb_height / 2
 
                 #print("DBG: Index %d: face_center_x = %d, face_center_y = %d" % 
                 #    (index, face_center_x, face_center_y))
@@ -201,12 +201,10 @@ class FaceRecognitionNode(object):
         if person.face_found:
             #rospy.loginfo("%s:DBG face found, comparing to known faces" % (self.log_name))
 
-            bb_left =   int(  person.face_left * self.scaling_factor)
-            bb_top =    int(  person.face_top  * self.scaling_factor)
-            bb_right =  int( (person.face_left + person.face_width) \
-                * self.scaling_factor)
-            bb_bottom = int( (person.face_top + person.face_height)  \
-                * self.scaling_factor)
+            bb_left =   int(  person.bb_left * self.scaling_factor)
+            bb_top =    int(  person.bb_top  * self.scaling_factor)
+            bb_right =  int( (person.bb_left + person.bb_width) * self.scaling_factor)
+            bb_bottom = int( (person.bb_top + person.bb_height) * self.scaling_factor)
 
             # crop to bounding box
             temp_image = image[bb_top:bb_bottom, bb_left:bb_right ]
@@ -217,11 +215,12 @@ class FaceRecognitionNode(object):
             cropped_image_height, cropped_image_width, cropped_image_channels = temp_image.shape
             #print('DBG: Cropped Image Shape: ', cropped_image_height, cropped_image_width, cropped_image_channels)
 
-
-            if temp_image is None: # insure there was something in the bounding box
+            # insure there was something in the bounding box
+            if temp_image is None or cropped_image_height < 1 or cropped_image_width < 1 or  cropped_image_channels < 3: 
                 rospy.loginfo("%s: Bad bounding box, skipping." % (self.log_name))
-            else:
+                print("ERROR: cropping face to: width = %d, height = %d" % ((bb_right-bb_left), (bb_bottom-bb_top)))  
 
+            else:
                 rgb_cropped_img = cv2.cvtColor(temp_image, cv2.COLOR_BGR2RGB)
 
                 # Show crop person image - BGR GREEN
