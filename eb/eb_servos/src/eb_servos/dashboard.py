@@ -22,7 +22,9 @@ from servo_joint_list import *
 from eb_servos.set_pose import *    # for RobotPose
 from eb_servos.set_servo_torque import *
 
-import PySimpleGUI as psg
+#import PySimpleGUI as psg
+import FreeSimpleGUI as psg
+
 
 import actionlib
 import actionlib.action_client

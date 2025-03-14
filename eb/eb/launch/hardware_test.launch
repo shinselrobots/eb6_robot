@@ -37,9 +37,7 @@
   -->
 
   <!-- Joystick input, which publishes a generic '/joy' Joystick topic. Disable when not needed -->
-  <!-- *** DISABLED ***
-  <node pkg="joy" type="joy_node" name="joystick" output="screen"/>
-  -->
+    <node pkg="joy" type="joy_node" name="joystick" output="screen"/>
   
 
 

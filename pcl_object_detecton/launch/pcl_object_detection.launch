@@ -1,7 +1,0 @@
-<launch>
-  <node pkg="pcl_object_detection" type="pcl_object_detection_node" name="pcl_object_detection_node" output="screen">
- 
-  </node>
-
-</launch>
-

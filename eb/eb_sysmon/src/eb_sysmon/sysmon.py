@@ -22,7 +22,8 @@ import actionlib.action_client
 from behavior_msgs.msg import CommandState 
 
 from gui_layout import layout
-import PySimpleGUI as psg
+#import PySimpleGUI as psg
+import FreeSimpleGUI as psg
 
 # Global Constants
 EAR_CMD_OFF               = 0  # Off

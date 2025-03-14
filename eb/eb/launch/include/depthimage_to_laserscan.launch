@@ -16,7 +16,7 @@
     <param name="scan_height"     type="int"    value="20"/> <!-- default: 1 pixel. Number of pixel rows used to generate laser scan. -->
     <param name="scan_time"       type="double" value="0.066"/> <!-- 15 FPS.  default:0.033, 30 FPS . Time between scans. -->
     <param name="range_min"       type="double" value="0.2"/> <!--default:0.45m. Ranges less than this are considered -Inf. -->
-    <param name="range_max"       type="double" value="1.5"/> <!--default: 10m. Ranges greater than this are considered +Inf. -->
+    <param name="range_max"       type="double" value="2.0"/> <!--default: 10m. Ranges greater than this are considered +Inf. -->
     <param name="output_frame_id" type="str"    value="camera_depth_frame"/> <!--default: camera_depth_frame. Frame id of the laser scan. -->
 	
   </node>

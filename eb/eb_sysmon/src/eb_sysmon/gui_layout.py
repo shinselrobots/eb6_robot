@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # Sysmon GUI Layout for PySimpleGui / FreeSimpleGui
-import PySimpleGUI as psg
+#import PySimpleGUI as psg
+import FreeSimpleGUI as psg
 
 
 layout = [
