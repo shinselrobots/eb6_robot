@@ -324,7 +324,7 @@ class DanceBehavior():
         servo_speed = 0.35  # 0.2
         SetServoSpeed(servo_speed, neck_joints)
         self.pub_head_pan.publish(0.0)
-        self.pub_head_tilt.publish(-0.40) # -0.40 = center for Pose 3 TODO TODO 
+        self.pub_head_tilt.publish(-0.15) # -0.40 = center for Pose 3 TODO TODO 
         self.pub_head_sidetilt.publish(0.0) 
 
         # Get initial rotation position
@@ -535,11 +535,11 @@ class DanceBehavior():
             if double_move_beat:
                 # return head on the half beat (head move faster than body)
                 if not DEBUG_LIGHTS_ONLY:
-                    self.pub_head_tilt.publish(-0.45) # -0.40 = center
+                    self.pub_head_tilt.publish(-0.20) # -0.40 = center
                
             if move_beat:
                 if not DEBUG_LIGHTS_ONLY:
-                    self.pub_head_tilt.publish(-0.35) 
+                    self.pub_head_tilt.publish(-0.10) 
 
 
             if move_beat:

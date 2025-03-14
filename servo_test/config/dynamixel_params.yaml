@@ -1,0 +1,64 @@
+# Servo Config for EB Robot
+# Limits defined here are absolute limits (before something breaks).  Limits in code/Moveit should be smaller than these.
+
+## NOTE: for reversed servo, swap min and max values! (min > max)
+
+## SERVO SPEEDS USED:
+# MX28:   55 RPM --> 5.8 rad/sec (2.5 NM Torque)
+# MX64:   63 RPM --> 6.6 rad/sec (6.0 NM Torque)
+# MX106:  35 RPM --> 3.7 rad/sec (8.4 NM Torque)
+
+# Ticks * .001534 = radians
+
+# Common reference points
+#            Degrees   Ticks     Radians
+# Min:      -180 deg       1    -3.14159
+#            -90 deg    1024    -1.5708
+#            -45 deg    1536    -0.785398
+#            -20 deg    1844    -0.349066
+#            -15 deg    1895    -0.261799
+#            -10 deg            -0.174533
+# Center:      0 deg    2048     0.0
+#              1 deg             0.0174533
+#             10 deg             0.174533
+#             15 deg    2201     0.261799
+#             20 deg    2252     0.349066
+#             45 deg    2560     0.785398
+#             90 deg    3072     1.5708
+# Max:      +180 deg    4095     3.14159
+
+
+## WARNING!  IF YOU ADD OR REMOVE SERVOS, CHANGE "max_motor_id" in "servos.launch"
+
+dynamixels: [
+
+  'right_antenna_joint', 
+  ] 
+
+
+controllers: [
+
+  'right_antenna_joint', 
+  ] 
+
+
+# --------------------------------------------------------------
+# Head
+
+right_antenna_joint: # Positive = Forward
+    controller:
+        package: dynamixel_controllers
+        module: joint_position_controller
+        type: JointPositionController
+    joint_name: right_antenna_joint
+    joint_speed: 5.8
+    motor:
+        id: 1
+        init: 2047
+        max: 1024   # +90  REVERSED SERVO
+        min: 3072   # -90  
+        
+
+
+
+

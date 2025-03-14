@@ -147,7 +147,7 @@ class BehaviorUtils():
 class BehaviorServer():
     def __init__(self):
         rospy.init_node('behavior_server')
-        self.module_name = 'behavior_server'
+        self.log_name = 'behavior_server'
         self.speech_client = None
         self.new_command = ''
         self.new_param1 = ''
@@ -305,8 +305,7 @@ class BehaviorServer():
     def handle_name_only_behavior(self, param1, param2):  # TODO TODO TODO             
         # If user says robot's name, turn AI back on, but ONLY if it's NOT in SLEEP MODE!
         # does not interrupt current behavior
-        local_module_name = 'name_only_behavior'
-        rospy.loginfo('%s: Executing behavior' % (local_module_name))
+        rospy.loginfo('%s:handle_name_only_behavior: Executing behavior' % (self.log_name))
         rospy.loginfo( "Param1: '%s'", param1)
         rospy.loginfo( "Param2: '%s'", param2)
 
@@ -325,10 +324,10 @@ class BehaviorServer():
 
     def set_ai_enabled(self, enable):
         if enable:
-            rospy.loginfo('%s: Enabling AI mode' % (local_module_name))
+            rospy.loginfo('%s:set_ai_enabled: Enabling AI mode' % (self.log_name))
             self.ai_enabled = True
         else:
-            rospy.loginfo('%s: Disabling AI mode.' % (local_module_name))
+            rospy.loginfo('%s:set_ai_enabled: Disabling AI mode.' % (self.log_name))
             self.ai_enabled = False
 
         if self.current_running_behavior == 'SLEEP':
@@ -344,8 +343,7 @@ class BehaviorServer():
     def handle_ai_mode_behavior(self, param1, param2):
         # does not interrupt current behavior
         # used to turn AI off and keep it there (from phone, etc) until re-enabled
-        local_module_name = 'ai_mode_behavior'
-        rospy.loginfo('%s: Executing behavior' % (local_module_name))
+        rospy.loginfo('%s:handle_ai_mode_behavior: Executing behavior' % (self.log_name))
         rospy.loginfo( "Param1: '%s'", param1)
         rospy.loginfo( "Param2: '%s'", param2)
 
@@ -367,11 +365,11 @@ class BehaviorServer():
             # does not change self.ai_enabled state
 
             if self.current_running_behavior != 'SLEEP':
-                rospy.loginfo('%s: AI mode: PAUSE_TALKING Mode now active.' % (local_module_name))
+                rospy.loginfo('%s:handle_ai_mode_behavior: AI mode: PAUSE_TALKING Mode now active.' % (self.log_name))
                 self.speech_reco_mode_pub.publish('keyword') # Listen for keywords only        
 
         else:
-            rospy.logwarn('%s: Bad AI mode parameter!  Ignored command!' % (local_module_name))
+            rospy.logwarn('%s:handle_ai_mode_behavior: Bad AI mode parameter!  Ignored command!' % (self.log_name))
 
 
 

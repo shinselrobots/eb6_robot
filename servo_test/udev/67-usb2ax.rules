@@ -1,0 +1,3 @@
+# rules for USB2ax (mini USB to Dynamixel device)
+# Note: no serial number used by default. If needed (for collision with another device), add: ENV{ID_SERIAL_SHORT}=="your_serial_number",
+SUBSYSTEM=="tty", ENV{ID_VENDOR_ID}=="16d0", ENV{ID_MODEL_ID}=="06a7", MODE:="0666", GROUP:="dialout", SYMLINK+="dynamixel"
